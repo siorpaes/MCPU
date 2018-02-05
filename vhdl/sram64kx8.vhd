@@ -24,7 +24,7 @@ use IEEE.std_logic_arith.all;
 
 entity sram64kx8 is
 
-  generic (rom_data_file_name: string := "memory.dat");
+  generic (rom_data_file_name: string := "memory_count.dat");
 
   port (ncs1, cs2: in std_logic;        -- not chip select 1, cs2
         addr     : in std_logic_vector( 15 downto 0 );
