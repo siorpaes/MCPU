@@ -9,13 +9,18 @@ architecture behaviour of mcpu_testbench is
 
 signal r_clk        : std_logic := '0';
 signal r_reset      : std_logic := '0';
+signal clksel       : std_logic := '0';
 
 begin
 	MCPUTOP: entity work.mcpu_toplevel
 	port map(
 	clk => r_clk,
+	clksel => clksel,
 	reset => r_reset
 	);
+	
+	-- Use plain clock for simulation, not divided one 
+	clksel <= '0';
 	
   process                                              
 	begin                                                

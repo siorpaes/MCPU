@@ -3,9 +3,10 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity mcpu_toplevel is
-generic (CLK_DIVISOR :  POSITIVE := 2);
+generic (CLK_DIVISOR :  POSITIVE := 100);
 port(
 	clk     : in std_logic;
+	clksel  : in std_logic;   -- Tells wheter to use plain clock or divided one
 	reset   : in std_logic;
 	address : out std_logic_vector(5 downto 0)
 );
@@ -24,6 +25,7 @@ signal r_adress    : std_logic_vector (5 downto 0) := (others => '0');
 signal r_oe        : std_logic := '0';
 signal r_we        : std_logic := '0';
 signal sram_we     : std_logic := '0';
+signal div_clk     : std_logic := '0';
 signal r_clk       : std_logic := '0';
 signal r_rst       : std_logic := '0';
 
@@ -34,7 +36,7 @@ begin
 	if(rising_edge(clk)) then
 		if clk_div_cnt = (CLK_DIVISOR-1) then
 			clk_div_cnt <= (others => '0');
-			r_clk <= not r_clk;
+			div_clk <= not div_clk;
 		else
 			clk_div_cnt <= clk_div_cnt + 1;
 		end if;
@@ -50,7 +52,7 @@ begin
 	oe	    => r_oe,
 	we      => r_we,	
 	rst     => r_rst,	
-	clk	    => clk
+	clk	    => r_clk
 	);
     
     -- Instantiate SRAM
@@ -58,7 +60,7 @@ begin
     port map(
 	a => r_adress,
 	d => r_datain,
-	clk => clk,
+	clk => r_clk,
 	we => sram_we,
 	spo => r_dataout
     );
@@ -75,5 +77,8 @@ begin
     
     -- Reset
     r_rst <= reset;
+    
+    -- Clock selection: if clksel = 1 use divided clock otherwise use original clock
+    r_clk <= clk when (clksel = '0') else div_clk;
     
 end architecture behaviour;
