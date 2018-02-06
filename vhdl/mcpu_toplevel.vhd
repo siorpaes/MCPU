@@ -6,7 +6,6 @@ entity mcpu_toplevel is
 generic (CLK_DIVISOR :  POSITIVE := 100);
 port(
 	clk     : in std_logic;
-	clksel  : in std_logic;   -- Tells wheter to use plain clock or divided one
 	reset   : in std_logic;
 	address : out std_logic_vector(5 downto 0)
 );
@@ -78,7 +77,7 @@ begin
     -- Reset
     r_rst <= reset;
     
-    -- Clock selection: if clksel = 1 use divided clock otherwise use original clock
-    r_clk <= clk when (clksel = '0') else div_clk;
+    -- Assign clock
+    r_clk <= div_clk;
     
 end architecture behaviour;
