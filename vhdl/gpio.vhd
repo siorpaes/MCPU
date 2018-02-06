@@ -20,7 +20,7 @@ signal r_data : std_logic_vector (7 downto 0) := "10101010";
 begin
     gpio_clk: process(clk)
     begin
-	if(falling_edge(clk)) then
+	if(rising_edge(clk)) then
 		if(reset = '0') then
 			r_data <= "00000000";
 		-- If accessing 0x3c emit data. Cannot put condition on WE as it is asynchronous
