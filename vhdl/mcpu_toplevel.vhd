@@ -3,11 +3,12 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity mcpu_toplevel is
-generic (CLK_DIVISOR :  POSITIVE := 100);
+generic (CLK_DIVISOR :  POSITIVE := 10000);
 port(
 	clk     : in std_logic;
 	reset   : in std_logic;
-	address : out std_logic_vector(5 downto 0)
+	mgpio   : out std_logic_vector(7 downto 0);  -- GPIO
+	debug   : out std_logic_vector(7 downto 0)   -- Debug port
 );
 end entity mcpu_toplevel;
 
@@ -27,6 +28,7 @@ signal sram_we     : std_logic := '0';
 signal div_clk     : std_logic := '0';
 signal r_clk       : std_logic := '0';
 signal r_rst       : std_logic := '0';
+signal r_gpio      : std_logic_vector (7 downto 0) := (others => '0');
 
 begin
 
@@ -63,8 +65,18 @@ begin
 	we => sram_we,
 	spo => r_dataout
     );
+    
+    GPIO: entity work.gpio
+    port map(
+    clk => r_clk,
+    reset => reset,
+    address => r_adress,
+    data => r_data,
+    gpo => r_gpio,
+    we => r_we
+    );
         	
-    -- Manage data mux
+    -- Manage data mux MCPU <=> SRAM
    	r_datain <= r_data when (r_we = '0') else "ZZZZZZZZ";
 	r_data   <= r_dataout when (r_oe = '0') else "ZZZZZZZZ";
     
@@ -72,12 +84,15 @@ begin
     sram_we <= '1' when (r_oe = '1' and r_we = '0') else '0';
 
 	-- Debug address
-    address <= r_adress;
+    debug <= r_gpio;
     
     -- Reset
     r_rst <= reset;
     
     -- Assign clock
     r_clk <= div_clk;
+    
+    -- GPIO
+    mgpio <= r_gpio;
     
 end architecture behaviour;
