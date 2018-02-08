@@ -18,14 +18,16 @@ architecture behaviour of gpio is
 signal r_data : std_logic_vector (7 downto 0) := "10101010";
 
 begin
-    gpio_clk: process(clk)
+    gpio_clk: process(clk, we)
     begin
 	if(rising_edge(clk)) then
 		if(reset = '0') then
 			r_data <= "00000000";
-		-- If accessing 0x3c emit data. Cannot put condition on WE as it is asynchronous
+		-- If writing to 0x3c emit data on GPIO port
 		elsif(address = "111100") then
-			r_data <= data;
+				if(we = '0') then
+					r_data <= data;
+				end if;
 		end if;
 	end if;
     end process gpio_clk;

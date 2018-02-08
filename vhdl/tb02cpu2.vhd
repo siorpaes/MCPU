@@ -59,13 +59,32 @@ begin
 			else  states <= "0" & not data(7 downto 6); 			-- execute instruction	
 		end if;	
 	   end if;
+	   
+	   -- Synchronized version
+	   if(states /= "001") then
+	   		data <= "ZZZZZZZZ";
+	   	else
+	   		data <= akku(7 downto 0);
+	   	end if;
+	   
+	    -- no memory access during reset and
+		if(states = "001" or rst='0' or states = "101") then
+			oe <= '1';
+		else
+			oe <= '0';
+		end if;
+		
+		-- state "101" (branch not taken)
+		if(states /= "001" or rst='0') then
+			we <= '1';
+		else
+			we <= '0';
+		end if;
+	   
 	end process;
 	
 	-- output
 	adress	<= adreg;
-	data 	<= "ZZZZZZZZ" when states /= "001" else akku(7 downto 0);
-	oe <= '1' when (clk='1' or states  = "001" or rst='0' or states = "101") else '0'; 	-- no memory access during reset and 
-	we <= '1' when (clk='1' or states /= "001" or rst='0') else '0'; 			-- state "101" (branch not taken)
-	
+
 end CPU_ARCH;
 	

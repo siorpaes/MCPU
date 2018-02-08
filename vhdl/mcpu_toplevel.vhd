@@ -43,7 +43,7 @@ begin
 		end if;
 	end if;
     end process mcpu_clk;
-    
+
     
 	-- Instantiate MCPU peripheral
 	MCPU: entity work.CPU8BIT2
@@ -55,6 +55,7 @@ begin
 	rst     => r_rst,	
 	clk	    => r_clk
 	);
+    
     
     -- Instantiate SRAM
     SRAM: entity work.mcpu_ram
@@ -69,13 +70,14 @@ begin
     GPIO: entity work.gpio
     port map(
     clk => r_clk,
-    reset => reset,
+    reset => r_rst,
     address => r_adress,
     data => r_data,
     gpo => r_gpio,
     we => r_we
     );
-        	
+
+    
     -- Manage data mux MCPU <=> SRAM
    	r_datain <= r_data when (r_we = '0') else "ZZZZZZZZ";
 	r_data   <= r_dataout when (r_oe = '0') else "ZZZZZZZZ";
