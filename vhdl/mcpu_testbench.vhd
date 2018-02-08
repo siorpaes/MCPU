@@ -7,34 +7,34 @@ end entity mcpu_testbench;
 
 architecture behaviour of mcpu_testbench is
 
-signal r_clk        : std_logic := '0';
-signal r_reset      : std_logic := '0';
+signal clk        : std_logic := '0';
+signal reset      : std_logic := '0';
 
 begin
 	MCPUTOP: entity work.mcpu_toplevel
 	port map(
-	clk => r_clk,
-	reset => r_reset
+	clk => clk,
+	reset => reset
 	);
 	
 
   process                                              
 	begin                                                
-	      r_clk <= '0';                                    
-	      r_reset <= '1';                                  
+	      clk <= '0';                                    
+	      reset <= '1';                                  
 	      WAIT FOR 10 ns;                                
-	      r_clk <= '0';                                    
-	      r_reset <= '0';                                  
+	      clk <= '0';                                    
+	      reset <= '0';                                  
 	      WAIT FOR 10 ns;                                
-	      r_clk <= '1';                                    
+	      clk <= '1';                                    
 	      WAIT FOR 5 ns;                                
-	      r_reset <= '1';                                  
+	      reset <= '1';                                  
 	      WAIT FOR 5 ns;                                
 	                                                     
 	      loop                                           
-	        r_clk <= '0';                                  
+	        clk <= '0';                                  
 	        WAIT FOR 10 ns;                              
-	        r_clk <= '1';                                  
+	        clk <= '1';                                  
 	        WAIT FOR 10 ns;               -- clock.      
 	      end loop;                        
 	end process;
