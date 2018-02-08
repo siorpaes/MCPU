@@ -1,7 +1,7 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
--- Date        : Tue Feb  6 12:07:52 2018
+-- Date        : Thu Feb  8 15:43:45 2018
 -- Host        : AGRCWD3314 running 64-bit Service Pack 1  (build 7601)
 -- Command     : write_vhdl -force -mode funcsim {C:/Users/david
 --               siorpaes/Desktop/MCPU/projects/Basys3/mcpu.srcs/sources_1/ip/mcpu_ram/mcpu_ram_sim_netlist.vhdl}
@@ -141,7 +141,7 @@ begin
     );
 ram_reg_0_63_0_0: unisim.vcomponents.RAM64X1S
     generic map(
-      INIT => X"C00000000000000A"
+      INIT => X"C00000000000014E"
     )
         port map (
       A0 => a(0),
@@ -157,7 +157,7 @@ ram_reg_0_63_0_0: unisim.vcomponents.RAM64X1S
     );
 ram_reg_0_63_1_1: unisim.vcomponents.RAM64X1S
     generic map(
-      INIT => X"4000000000000003"
+      INIT => X"42000000000000F7"
     )
         port map (
       A0 => a(0),
@@ -173,7 +173,7 @@ ram_reg_0_63_1_1: unisim.vcomponents.RAM64X1S
     );
 ram_reg_0_63_2_2: unisim.vcomponents.RAM64X1S
     generic map(
-      INIT => X"4000000000000007"
+      INIT => X"4200000000000253"
     )
         port map (
       A0 => a(0),
@@ -189,7 +189,7 @@ ram_reg_0_63_2_2: unisim.vcomponents.RAM64X1S
     );
 ram_reg_0_63_3_3: unisim.vcomponents.RAM64X1S
     generic map(
-      INIT => X"4000000000000007"
+      INIT => X"42000000000003F7"
     )
         port map (
       A0 => a(0),
@@ -205,7 +205,7 @@ ram_reg_0_63_3_3: unisim.vcomponents.RAM64X1S
     );
 ram_reg_0_63_4_4: unisim.vcomponents.RAM64X1S
     generic map(
-      INIT => X"4000000000000007"
+      INIT => X"42000000000003F7"
     )
         port map (
       A0 => a(0),
@@ -221,7 +221,7 @@ ram_reg_0_63_4_4: unisim.vcomponents.RAM64X1S
     );
 ram_reg_0_63_5_5: unisim.vcomponents.RAM64X1S
     generic map(
-      INIT => X"4000000000000007"
+      INIT => X"42000000000003F7"
     )
         port map (
       A0 => a(0),
@@ -237,7 +237,7 @@ ram_reg_0_63_5_5: unisim.vcomponents.RAM64X1S
     );
 ram_reg_0_63_6_6: unisim.vcomponents.RAM64X1S
     generic map(
-      INIT => X"400000000000001A"
+      INIT => X"4200000000000C6A"
     )
         port map (
       A0 => a(0),
@@ -253,7 +253,7 @@ ram_reg_0_63_6_6: unisim.vcomponents.RAM64X1S
     );
 ram_reg_0_63_7_7: unisim.vcomponents.RAM64X1S
     generic map(
-      INIT => X"400000000000001C"
+      INIT => X"4200000000000E8C"
     )
         port map (
       A0 => a(0),

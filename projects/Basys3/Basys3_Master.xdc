@@ -9,9 +9,8 @@ set_property IOSTANDARD LVCMOS33 [get_ports clk]
 create_clock -add -name sys_clk_pin -period 10.00 -waveform {0 5} [get_ports clk]
  
 ## Switches
-# Clock selection
-#set_property PACKAGE_PIN V17 [get_ports clksel]
-#set_property IOSTANDARD LVCMOS33 [get_ports clksel]
+set_property PACKAGE_PIN V17 [get_ports reset]
+set_property IOSTANDARD LVCMOS33 [get_ports reset]
 #set_property PACKAGE_PIN V16 [get_ports {sw[1]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {sw[1]}]
 #set_property PACKAGE_PIN W16 [get_ports {sw[2]}]					
@@ -110,8 +109,8 @@ set_property IOSTANDARD LVCMOS33 [get_ports {mgpio[7]}]
 
 ##Buttons
 # Reset button. By default under reset. Press button to exit reset
-set_property PACKAGE_PIN U18 [get_ports reset]						
-set_property IOSTANDARD LVCMOS33 [get_ports reset]
+#set_property PACKAGE_PIN U18 [get_ports reset]						
+#set_property IOSTANDARD LVCMOS33 [get_ports reset]
 #set_property PACKAGE_PIN T18 [get_ports btnU]						
 	#set_property IOSTANDARD LVCMOS33 [get_ports btnU]
 #set_property PACKAGE_PIN W19 [get_ports btnL]						

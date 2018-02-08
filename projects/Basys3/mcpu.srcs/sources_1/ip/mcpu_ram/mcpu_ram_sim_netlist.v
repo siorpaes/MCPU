@@ -1,7 +1,7 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
-// Date        : Tue Feb  6 12:07:52 2018
+// Date        : Thu Feb  8 15:43:45 2018
 // Host        : AGRCWD3314 running 64-bit Service Pack 1  (build 7601)
 // Command     : write_verilog -force -mode funcsim {C:/Users/david
 //               siorpaes/Desktop/MCPU/projects/Basys3/mcpu.srcs/sources_1/ip/mcpu_ram/mcpu_ram_sim_netlist.v}
@@ -303,7 +303,7 @@ module mcpu_ram_spram
         .Q(qspo_int[7]),
         .R(1'b0));
   RAM64X1S #(
-    .INIT(64'hC00000000000000A)) 
+    .INIT(64'hC00000000000014E)) 
     ram_reg_0_63_0_0
        (.A0(a[0]),
         .A1(a[1]),
@@ -316,7 +316,7 @@ module mcpu_ram_spram
         .WCLK(clk),
         .WE(we));
   RAM64X1S #(
-    .INIT(64'h4000000000000003)) 
+    .INIT(64'h42000000000000F7)) 
     ram_reg_0_63_1_1
        (.A0(a[0]),
         .A1(a[1]),
@@ -329,7 +329,7 @@ module mcpu_ram_spram
         .WCLK(clk),
         .WE(we));
   RAM64X1S #(
-    .INIT(64'h4000000000000007)) 
+    .INIT(64'h4200000000000253)) 
     ram_reg_0_63_2_2
        (.A0(a[0]),
         .A1(a[1]),
@@ -342,7 +342,7 @@ module mcpu_ram_spram
         .WCLK(clk),
         .WE(we));
   RAM64X1S #(
-    .INIT(64'h4000000000000007)) 
+    .INIT(64'h42000000000003F7)) 
     ram_reg_0_63_3_3
        (.A0(a[0]),
         .A1(a[1]),
@@ -355,7 +355,7 @@ module mcpu_ram_spram
         .WCLK(clk),
         .WE(we));
   RAM64X1S #(
-    .INIT(64'h4000000000000007)) 
+    .INIT(64'h42000000000003F7)) 
     ram_reg_0_63_4_4
        (.A0(a[0]),
         .A1(a[1]),
@@ -368,7 +368,7 @@ module mcpu_ram_spram
         .WCLK(clk),
         .WE(we));
   RAM64X1S #(
-    .INIT(64'h4000000000000007)) 
+    .INIT(64'h42000000000003F7)) 
     ram_reg_0_63_5_5
        (.A0(a[0]),
         .A1(a[1]),
@@ -381,7 +381,7 @@ module mcpu_ram_spram
         .WCLK(clk),
         .WE(we));
   RAM64X1S #(
-    .INIT(64'h400000000000001A)) 
+    .INIT(64'h4200000000000C6A)) 
     ram_reg_0_63_6_6
        (.A0(a[0]),
         .A1(a[1]),
@@ -394,7 +394,7 @@ module mcpu_ram_spram
         .WCLK(clk),
         .WE(we));
   RAM64X1S #(
-    .INIT(64'h400000000000001C)) 
+    .INIT(64'h4200000000000E8C)) 
     ram_reg_0_63_7_7
        (.A0(a[0]),
         .A1(a[1]),

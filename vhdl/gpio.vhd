@@ -24,10 +24,8 @@ begin
 		if(reset = '0') then
 			r_data <= "00000000";
 		-- If writing to 0x3c emit data on GPIO port
-		elsif(address = "111100") then
-				if(we = '0') then
-					r_data <= data;
-				end if;
+		elsif(address = "111100" and we = '0') then
+			r_data <= data;
 		end if;
 	end if;
     end process gpio_clk;
