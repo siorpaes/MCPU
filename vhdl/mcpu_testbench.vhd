@@ -22,20 +22,20 @@ begin
 	begin                                                
 	      r_clk <= '0';                                    
 	      r_reset <= '1';                                  
-	      WAIT FOR 50 ns;                                
+	      WAIT FOR 10 ns;                                
 	      r_clk <= '0';                                    
 	      r_reset <= '0';                                  
-	      WAIT FOR 50 ns;                                
+	      WAIT FOR 10 ns;                                
 	      r_clk <= '1';                                    
-	      WAIT FOR 25 ns;                                
+	      WAIT FOR 5 ns;                                
 	      r_reset <= '1';                                  
-	      WAIT FOR 25 ns;                                
+	      WAIT FOR 5 ns;                                
 	                                                     
 	      loop                                           
 	        r_clk <= '0';                                  
-	        WAIT FOR 50 ns;                              
+	        WAIT FOR 10 ns;                              
 	        r_clk <= '1';                                  
-	        WAIT FOR 50 ns;               -- clock.      
+	        WAIT FOR 10 ns;               -- clock.      
 	      end loop;                        
 	end process;
 end architecture behaviour;
