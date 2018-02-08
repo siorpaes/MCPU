@@ -10,4 +10,10 @@ value in 0x3c so that gpio peripheral is stimulated.
 2  STA[0x3c]     0xbc  0b10111100
 3  JCC 1         0xc1  0b11000001
 4  JCC 0         0xc0  0b11000000
+~~
+3c GPIO register
+3d 00 constant
+3e ff constant
+3f 01 constant
+
 
