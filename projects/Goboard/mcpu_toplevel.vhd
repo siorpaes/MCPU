@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity mcpu_toplevel is
-generic (CLK_DIVISOR :  POSITIVE := 100000);
+generic (CLK_DIVISOR :  POSITIVE := 1000000);
 port(
   clk     : in std_logic;
   reset   : in std_logic;
@@ -71,7 +71,7 @@ end process clk_divider;
 
 
 -- Instantiate SRAM
-  SRAM: entity work.ice40_ram
+  SRAM: entity work.ice40_ram2
   port map(
 	a   => s_address,
 	d   => mcpu_dataout,

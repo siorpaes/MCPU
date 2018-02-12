@@ -3,11 +3,11 @@
 #project files
 
 add_file -vhdl -lib work "../../../vhdl/tb02cpu2.vhd" 
-add_file -vhdl -lib work "../../../vhdl/iCE40/ice40_ram.vhd" 
 add_file -vhdl -lib work "../../../vhdl/iCE40/ssd-one-digit.vhd" 
 add_file -vhdl -lib work "../../../vhdl/iCE40/ssd-two-digits.vhd" 
 add_file -vhdl -lib work "../mcpu_toplevel.vhd" 
 add_file -vhdl -lib work "../../../vhdl/gpio.vhd" 
+add_file -vhdl -lib work "../../../vhdl/iCE40/ice40_ram2.vhd" 
 #implementation: "mcpu_Implmnt"
 impl -add mcpu_Implmnt -type fpga
 

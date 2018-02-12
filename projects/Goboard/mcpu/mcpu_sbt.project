@@ -4,7 +4,7 @@ Version=Lattice Semiconductor Corporation iCEcube - Release: 2017.01.27914 - Bui
 ProjectName=mcpu
 Vendor=SiliconBlue
 Synthesis=synplify
-ProjectVFiles=../../../vhdl/tb02cpu2.vhd,../../../vhdl/iCE40/ice40_ram.vhd,../../../vhdl/iCE40/ssd-one-digit.vhd,../../../vhdl/iCE40/ssd-two-digits.vhd,../mcpu_toplevel.vhd,../../../vhdl/gpio.vhd
+ProjectVFiles=../../../vhdl/tb02cpu2.vhd=work,../../../vhdl/iCE40/ssd-one-digit.vhd=work,../../../vhdl/iCE40/ssd-two-digits.vhd=work,../mcpu_toplevel.vhd=work,../../../vhdl/gpio.vhd=work,../../../vhdl/iCE40/ice40_ram2.vhd=work
 ProjectCFiles=
 CurImplementation=mcpu_Implmnt
 Implementations=mcpu_Implmnt
