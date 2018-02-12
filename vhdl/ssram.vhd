@@ -1,4 +1,4 @@
--- Simple SRAM miplementation
+-- Simple SRAM implementation
 -- See iCEcube2_userguide.pdf
 
 
@@ -6,17 +6,17 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity ice40_ram2 is
+entity ssram is
 port(
-	a   : in  std_logic_vector(5 downto 0);
-	d   : in  std_logic_vector(7 downto 0);
-	clk : in  std_logic;
-	we  : in  std_logic;
-	spo : out std_logic_vector(7 downto 0)
+	a   : in  std_logic_vector(5 downto 0); -- Address
+	d   : in  std_logic_vector(7 downto 0); -- Data In
+	clk : in  std_logic;                    -- Clock
+	we  : in  std_logic;                    -- Write Enable, active high
+	spo : out std_logic_vector(7 downto 0)  -- Data Out
 );
-end ice40_ram2;
+end ssram;
 
-architecture Behavioral of ice40_ram2 is
+architecture Behavioral of ssram is
 
 type memory_array is array(0 to 63) of std_logic_vector(7 downto 0);
 signal memory : memory_array := (

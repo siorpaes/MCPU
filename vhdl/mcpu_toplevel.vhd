@@ -21,7 +21,7 @@ signal clk_div_cnt    : unsigned (31 downto 0) := (others => '0');
 signal r_data      : std_logic_vector (7 downto 0) := (others => '0');
 signal r_datain    : std_logic_vector (7 downto 0) := (others => '0');
 signal r_dataout   : std_logic_vector (7 downto 0) := (others => '0');
-signal r_adress    : std_logic_vector (5 downto 0) := (others => '0');
+signal r_address   : std_logic_vector (5 downto 0) := (others => '0');
 signal r_oe        : std_logic := '0';
 signal r_we        : std_logic := '0';
 signal sram_we     : std_logic := '0';
@@ -49,7 +49,7 @@ begin
 	MCPU: entity work.CPU8BIT2
 	port map(
 	data	=> r_data,
-	adress	=> r_adress,
+	adress	=> r_address,
 	oe	    => r_oe,
 	we      => r_we,	
 	rst     => r_rst,	
@@ -58,9 +58,10 @@ begin
     
     
     -- Instantiate SRAM
-    SRAM: entity work.mcpu_ram
+    --SRAM: entity work.mcpu_ram
+	SRAM: entity work.ssram
     port map(
-	a => r_adress,
+	a => r_address,
 	d => r_datain,
 	clk => r_clk,
 	we => sram_we,
@@ -71,7 +72,7 @@ begin
     port map(
     clk => r_clk,
     reset => r_rst,
-    address => r_adress,
+    address => r_address,
     data => r_data,
     gpo => r_gpio,
     we => r_we
@@ -85,8 +86,8 @@ begin
     -- MCPU WE is active low, SRAM WE is active high
     sram_we <= '1' when (r_oe = '1' and r_we = '0') else '0';
 
-	-- Debug address
-    debug <= r_gpio;
+	-- Debug address, clock and WE
+    debug <= r_address & r_we & r_clk;
     
     -- Reset
     r_rst <= reset;
