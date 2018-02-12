@@ -3,11 +3,11 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity mcpu_toplevel is
-generic (CLK_DIVISOR :  POSITIVE := 10000000);
+generic (CLK_DIVISOR :  POSITIVE := 100000);
 port(
   clk     : in std_logic;
   reset   : in std_logic;
-  gpio    : std_logic_vector(7 downto 0);
+  gpio    : out std_logic_vector(7 downto 0);
   o_Segment1_A : out std_logic;
   o_Segment1_B : out std_logic;
   o_Segment1_C : out std_logic;
@@ -33,7 +33,6 @@ signal div_clk     : std_logic := '0';
 
 -- Address
 signal s_address : std_logic_vector (5 downto 0) := (others => '0');
-signal ssdval : std_logic_vector (7 downto 0) := (others => '0');
 signal data : std_logic_vector (7 downto 0) := (others => '0');
 signal mcpu_datain  : std_logic_vector (7 downto 0) := (others => '0');
 signal mcpu_dataout : std_logic_vector (7 downto 0) := (others => '0');
@@ -41,6 +40,8 @@ signal s_oe : std_logic := '0';
 signal s_we : std_logic := '0';
 signal sram_we : std_logic := '0';
 
+signal ssdval : std_logic_vector (7 downto 0) := (others => '0');
+signal s_gpio : std_logic_vector (7 downto 0) := (others => '0');
 begin
 
 -- Clock divider
@@ -100,14 +101,29 @@ end process clk_divider;
     o_Segment_2G => o_Segment2_G
     );
 
+-- Instantiate GPIO peripheral
+   M_GPIO: entity work.gpio
+   port map(
+   clk => div_clk,
+   reset => reset,
+   address => s_address,
+   data => mcpu_dataout,
+   gpo => s_gpio,
+   we => s_we
+   );
 
 
-
+-- Write Enable is opposite
 sram_we <= not s_we;
+
+-- Route data
 data <= mcpu_datain when s_oe = '0' else "ZZZZZZZZ";
 mcpu_dataout <= data;
 
--- Debug
+-- Debug address
 ssdval <= "00" & std_logic_vector(s_address);
+
+-- GPIO peripheral
+gpio <= s_gpio;
 
 end behaviour;
