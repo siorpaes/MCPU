@@ -72,7 +72,7 @@ end process clk_divider;
 
 
 -- Instantiate SRAM
-  SRAM: entity work.ice40_ram2
+  SRAM: entity work.ssram
   port map(
 	a   => s_address,
 	d   => mcpu_dataout,
