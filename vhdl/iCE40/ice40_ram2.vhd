@@ -1,4 +1,6 @@
--- See SBT_ICE_Technology_Library.pdf, page 61
+-- Simple SRAM miplementation
+-- See iCEcube2_userguide.pdf
+
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -18,7 +20,6 @@ architecture Behavioral of ice40_ram2 is
 
 type memory_array is array(0 to 63) of std_logic_vector(7 downto 0);
 --signal memory : memory_array := (others => (others => '0'));
-
 signal memory : memory_array := ( x"3e",x"7f",x"bc",x"c1",x"c0",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",
 			x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",
 			x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",
