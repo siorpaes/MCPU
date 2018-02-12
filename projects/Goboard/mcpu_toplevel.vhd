@@ -8,6 +8,7 @@ port(
   clk     : in std_logic;
   reset   : in std_logic;
   gpio    : out std_logic_vector(7 downto 0);
+  debug   : out std_logic_vector(2 downto 0);
   o_Segment1_A : out std_logic;
   o_Segment1_B : out std_logic;
   o_Segment1_C : out std_logic;
@@ -120,8 +121,14 @@ sram_we <= not s_we;
 data <= mcpu_datain when s_oe = '0' else "ZZZZZZZZ";
 mcpu_dataout <= data;
 
--- Debug address
+-- Debug addres on display
 ssdval <= "00" & std_logic_vector(s_address);
+
+-- Debug other signals
+debug(0) <= div_clk;
+debug(1) <= s_oe;
+debug(2) <= s_we;
+
 
 -- GPIO peripheral
 gpio <= s_gpio;
