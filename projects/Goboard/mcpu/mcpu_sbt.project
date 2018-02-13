@@ -4,7 +4,7 @@ Version=Lattice Semiconductor Corporation iCEcube - Release: 2017.01.27914 - Bui
 ProjectName=mcpu
 Vendor=SiliconBlue
 Synthesis=synplify
-ProjectVFiles=../../../vhdl/tb02cpu2.vhd=work,../../../vhdl/iCE40/ssd-one-digit.vhd=work,../../../vhdl/iCE40/ssd-two-digits.vhd=work,../mcpu_toplevel.vhd=work,../../../vhdl/gpio.vhd=work,../../../vhdl/ssram.vhd
+ProjectVFiles=../../../vhdl/tb02cpu2.vhd=work,../../../vhdl/iCE40/ssd-one-digit.vhd=work,../../../vhdl/iCE40/ssd-two-digits.vhd=work,../mcpu_toplevel.vhd=work,../../../vhdl/gpio.vhd=work,../../../vhdl/ssram.vhd=work
 ProjectCFiles=
 CurImplementation=mcpu_Implmnt
 Implementations=mcpu_Implmnt
@@ -47,7 +47,7 @@ NetlistFile=mcpu_Implmnt/mcpu.edf
 AdditionalEDIFFile=
 IPEDIFFile=
 DesignLib=mcpu_Implmnt/sbt/netlist/oadb-mcpu_toplevel
-DesignView=_rt
+DesignView=_ep
 DesignCell=mcpu_toplevel
 SynthesisSDCFile=mcpu_Implmnt/mcpu.scf
 UserPinConstraintFile=

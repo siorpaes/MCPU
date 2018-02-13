@@ -28,7 +28,6 @@ signal memory : memory_array := (
 	x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"fe",x"00",x"00",x"00",x"00",x"ff",x"01"
 );
 
-
 -- Infer Block RAM for iCE40 Lattice FPGA
 attribute syn_ramstyle : string;
 attribute syn_ramstyle of memory : signal is "block_ram";
@@ -36,19 +35,23 @@ attribute syn_ramstyle of memory : signal is "block_ram";
 --Infer Block RAM for Xilinx FPGA                   
 attribute ram_style : string;                       
 attribute ram_style of memory : signal is "block";
+
+--signal dataout : std_logic_vector(7 downto 0) := "01010101";
    
 begin
 
-process(clk)
+process(clk, we, a, d)
 begin
 	if rising_edge(clk) then
-		if(we = '1') then
+		if(we = '0') then
 			memory(to_integer(unsigned(a))) <= d;
 		end if;
-	end if;
-	
-	spo <= memory(to_integer(unsigned(a)));
 
+		--spo <= memory(to_integer(unsigned(a)));
+	end if;
 end process;
+
+spo <= memory(to_integer(unsigned(a)));
+--spo <= dataout;
 
 end Behavioral;

@@ -17,6 +17,9 @@ architecture behaviour of mcpu_toplevel is
 -- Clock divider
 signal clk_div_cnt    : unsigned (31 downto 0) := (others => '0');
 
+-- Clock delay
+signal clk_dly_cnt    : unsigned (31 downto 0) := (others => '0');
+
 -- MCPU signals
 signal r_data       : std_logic_vector (7 downto 0) := (others => '0');
 signal mcpu_datain  : std_logic_vector (7 downto 0) := (others => '0');
@@ -24,25 +27,26 @@ signal mcpu_dataout : std_logic_vector (7 downto 0) := (others => '0');
 signal r_address    : std_logic_vector (5 downto 0) := (others => '0');
 signal r_oe         : std_logic := '0';
 signal r_we         : std_logic := '0';
-signal sram_we      : std_logic := '0';
 signal div_clk      : std_logic := '0';
 signal r_clk        : std_logic := '0';
+signal mcpu_clk     : std_logic := '0';
 signal r_rst        : std_logic := '0';
 signal r_gpio       : std_logic_vector (7 downto 0) := (others => '0');
 
 begin
 
-    mcpu_clk: process(clk)
+    clock: process(clk)
     begin
 	if(rising_edge(clk)) then
 		if clk_div_cnt = (CLK_DIVISOR-1) then
 			clk_div_cnt <= (others => '0');
 			div_clk <= not div_clk;
+			clk_dly_cnt <= clk_dly_cnt + 1;
 		else
 			clk_div_cnt <= clk_div_cnt + 1;
 		end if;
 	end if;
-    end process mcpu_clk;
+    end process clock;
 
     
 	-- Instantiate MCPU peripheral
@@ -53,7 +57,7 @@ begin
 	oe	    => r_oe,
 	we      => r_we,	
 	rst     => r_rst,	
-	clk	    => r_clk
+	clk	    => mcpu_clk
 	);
     
     
@@ -64,7 +68,7 @@ begin
 	a => r_address,
 	d => mcpu_dataout,
 	clk => r_clk,
-	we => sram_we,
+	we => r_we,
 	spo => mcpu_datain
     );
     
@@ -82,9 +86,6 @@ begin
     -- Manage data mux MCPU <=> SRAM
    	r_data <= mcpu_datain when (r_oe = '0') else "ZZZZZZZZ";
 	mcpu_dataout <= r_data;
-    
-    -- MCPU WE is active low, SRAM WE is active high
-    sram_we <= not r_we;
 
 	-- Debug address, clock and WE
     debug <= r_address & r_we & r_clk;
@@ -97,5 +98,8 @@ begin
     
     -- GPIO
     mgpio <= r_gpio;
+    
+    -- Delay MCPU clock so SRAM is ready
+    mcpu_clk <= div_clk when (clk_dly_cnt >= x"20") else '0';
     
 end architecture behaviour;
