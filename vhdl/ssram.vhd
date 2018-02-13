@@ -35,8 +35,6 @@ attribute syn_ramstyle of memory : signal is "block_ram";
 --Infer Block RAM for Xilinx FPGA                   
 attribute ram_style : string;                       
 attribute ram_style of memory : signal is "block";
-
---signal dataout : std_logic_vector(7 downto 0) := "01010101";
    
 begin
 
@@ -46,12 +44,9 @@ begin
 		if(we = '0') then
 			memory(to_integer(unsigned(a))) <= d;
 		end if;
-
-		--spo <= memory(to_integer(unsigned(a)));
 	end if;
 end process;
 
 spo <= memory(to_integer(unsigned(a)));
---spo <= dataout;
 
 end Behavioral;

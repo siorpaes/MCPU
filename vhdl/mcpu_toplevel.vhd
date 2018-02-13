@@ -17,9 +17,6 @@ architecture behaviour of mcpu_toplevel is
 -- Clock divider
 signal clk_div_cnt    : unsigned (31 downto 0) := (others => '0');
 
--- Clock delay
-signal clk_dly_cnt    : unsigned (31 downto 0) := (others => '0');
-
 -- MCPU signals
 signal r_data       : std_logic_vector (7 downto 0) := (others => '0');
 signal mcpu_datain  : std_logic_vector (7 downto 0) := (others => '0');
@@ -41,7 +38,6 @@ begin
 		if clk_div_cnt = (CLK_DIVISOR-1) then
 			clk_div_cnt <= (others => '0');
 			div_clk <= not div_clk;
-			clk_dly_cnt <= clk_dly_cnt + 1;
 		else
 			clk_div_cnt <= clk_div_cnt + 1;
 		end if;
@@ -57,7 +53,7 @@ begin
 	oe	    => r_oe,
 	we      => r_we,	
 	rst     => r_rst,	
-	clk	    => mcpu_clk
+	clk	    => r_clk
 	);
     
     
@@ -98,8 +94,5 @@ begin
     
     -- GPIO
     mgpio <= r_gpio;
-    
-    -- Delay MCPU clock so SRAM is ready
-    mcpu_clk <= div_clk when (clk_dly_cnt >= x"20") else '0';
     
 end architecture behaviour;
