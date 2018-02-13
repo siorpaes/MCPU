@@ -40,13 +40,13 @@ begin
 
 process(clk, we, a, d)
 begin
-	if rising_edge(clk) then
+	if falling_edge(clk) then
 		if(we = '0') then
 			memory(to_integer(unsigned(a))) <= d;
+		else
+			spo <= memory(to_integer(unsigned(a)));
 		end if;
 	end if;
 end process;
-
-spo <= memory(to_integer(unsigned(a)));
 
 end Behavioral;

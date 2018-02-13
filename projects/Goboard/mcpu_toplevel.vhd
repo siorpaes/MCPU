@@ -77,7 +77,7 @@ end process clk_divider;
 	a   => s_address,
 	d   => mcpu_dataout,
 	clk => div_clk,
-	we  => sram_we,
+	we  => s_we,
 	spo => mcpu_datain
   );
 
@@ -113,9 +113,6 @@ end process clk_divider;
    we => s_we
    );
 
-
--- Write Enable is opposite
-sram_we <= not s_we;
 
 -- Route data
 data <= mcpu_datain when s_oe = '0' else "ZZZZZZZZ";
