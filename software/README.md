@@ -42,3 +42,17 @@ b  JCC 0         0xc0  0b11000000
 3e ff constant
 3f 01 constant
 
+
+rwloop
+This application tests loads and stores without GPIO interface in order
+to check consistent SRAM access. It loads RAM from 0x06 (initialized to
+zero), adds 0xff, stores back to 0x06. It branches back to zero if carry
+is not set (so it is taken the first time) and then tight loops in 5.
+0  NOR[3e]      0x3e   ;LDA[06] 1/2   loads from 0x06 (initialized at 0)
+1  ADD[06]      0x46   ;LDA[06] 2/2
+2  ADD[3e]      0x7e   ;Adds 0xff
+3  STA[06]      0x86   ;Stores accumulator back to 0x06
+4  JCC 0        0xc0   ;Jumps to 0 once
+5  JCC 5        0xc5   ;Sits here
+
+

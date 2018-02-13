@@ -20,8 +20,9 @@ architecture Behavioral of ssram is
 
 type memory_array is array(0 to 63) of std_logic_vector(7 downto 0);
 signal memory : memory_array := (
-	x"3e",x"7f",x"bb",x"c1",x"3e",x"7a",x"7f",x"ba",x"39",x"bc",x"c0",x"c0",x"00",x"00",x"00",x"00", --blinky
---	x"3e",x"7f",x"bc",x"c1",x"c0",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00", --gpio
+	x"3e",x"7f",x"bb",x"c1",x"3e",x"7a",x"7f",x"ba",x"39",x"bc",x"c0",x"c0",x"00",x"00",x"00",x"00", -- blinky
+--	x"3e",x"7f",x"bc",x"c1",x"c0",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00", -- gpio
+--	x"3e",x"46",x"7e",x"86",x"c0",x"c5",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00", -- rwloop
 	x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",
 	x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",
 	x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"fe",x"00",x"00",x"00",x"00",x"ff",x"01"
@@ -40,13 +41,14 @@ begin
 
 process(clk)
 begin
-	if falling_edge(clk) then
+	if rising_edge(clk) then
 		if(we = '1') then
 			memory(to_integer(unsigned(a))) <= d;
-		else
-			spo <= memory(to_integer(unsigned(a)));
 		end if;
 	end if;
+	
+	spo <= memory(to_integer(unsigned(a)));
+
 end process;
 
 end Behavioral;

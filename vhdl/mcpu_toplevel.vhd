@@ -18,17 +18,17 @@ architecture behaviour of mcpu_toplevel is
 signal clk_div_cnt    : unsigned (31 downto 0) := (others => '0');
 
 -- MCPU signals
-signal r_data      : std_logic_vector (7 downto 0) := (others => '0');
-signal r_datain    : std_logic_vector (7 downto 0) := (others => '0');
-signal r_dataout   : std_logic_vector (7 downto 0) := (others => '0');
-signal r_address   : std_logic_vector (5 downto 0) := (others => '0');
-signal r_oe        : std_logic := '0';
-signal r_we        : std_logic := '0';
-signal sram_we     : std_logic := '0';
-signal div_clk     : std_logic := '0';
-signal r_clk       : std_logic := '0';
-signal r_rst       : std_logic := '0';
-signal r_gpio      : std_logic_vector (7 downto 0) := (others => '0');
+signal r_data       : std_logic_vector (7 downto 0) := (others => '0');
+signal mcpu_datain  : std_logic_vector (7 downto 0) := (others => '0');
+signal mcpu_dataout : std_logic_vector (7 downto 0) := (others => '0');
+signal r_address    : std_logic_vector (5 downto 0) := (others => '0');
+signal r_oe         : std_logic := '0';
+signal r_we         : std_logic := '0';
+signal sram_we      : std_logic := '0';
+signal div_clk      : std_logic := '0';
+signal r_clk        : std_logic := '0';
+signal r_rst        : std_logic := '0';
+signal r_gpio       : std_logic_vector (7 downto 0) := (others => '0');
 
 begin
 
@@ -62,10 +62,10 @@ begin
 	SRAM: entity work.ssram
     port map(
 	a => r_address,
-	d => r_datain,
+	d => mcpu_dataout,
 	clk => r_clk,
 	we => sram_we,
-	spo => r_dataout
+	spo => mcpu_datain
     );
     
     GPIO: entity work.gpio
@@ -80,11 +80,11 @@ begin
 
     
     -- Manage data mux MCPU <=> SRAM
-   	r_datain <= r_data when (r_we = '0') else "ZZZZZZZZ";
-	r_data   <= r_dataout when (r_oe = '0') else "ZZZZZZZZ";
+   	r_data <= mcpu_datain when (r_oe = '0') else "ZZZZZZZZ";
+	mcpu_dataout <= r_data;
     
     -- MCPU WE is active low, SRAM WE is active high
-    sram_we <= '1' when (r_oe = '1' and r_we = '0') else '0';
+    sram_we <= not r_we;
 
 	-- Debug address, clock and WE
     debug <= r_address & r_we & r_clk;
