@@ -17,6 +17,9 @@ architecture behaviour of mcpu_toplevel is
 -- Clock divider
 signal clk_div_cnt    : unsigned (31 downto 0) := (others => '0');
 
+signal delay          : unsigned (31 downto 0) := (others => '0');
+
+
 -- MCPU signals
 signal r_data       : std_logic_vector (7 downto 0) := (others => '0');
 signal mcpu_datain  : std_logic_vector (7 downto 0) := (others => '0');
@@ -38,6 +41,7 @@ begin
 		if clk_div_cnt = (CLK_DIVISOR-1) then
 			clk_div_cnt <= (others => '0');
 			div_clk <= not div_clk;
+			delay <= delay + 1;
 		else
 			clk_div_cnt <= clk_div_cnt + 1;
 		end if;
@@ -53,7 +57,7 @@ begin
 	oe	    => r_oe,
 	we      => r_we,	
 	rst     => r_rst,	
-	clk	    => r_clk
+	clk	    => mcpu_clk
 	);
     
     
@@ -89,8 +93,10 @@ begin
     -- Reset
     r_rst <= reset;
     
-    -- Assign clock
+    -- Assign clocks
     r_clk <= div_clk;
+    
+    mcpu_clk <= r_clk; -- when (delay >= x"07") else '0';
     
     -- GPIO
     mgpio <= r_gpio;
