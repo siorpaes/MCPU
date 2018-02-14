@@ -2,12 +2,12 @@
 #-- Project file C:\Users\david siorpaes\Desktop\MCPU\projects\Goboard\mcpu\mcpu_syn.prj
 #project files
 
-add_file -vhdl -lib work "../../../vhdl/tb02cpu2.vhd" 
 add_file -vhdl -lib work "../../../vhdl/iCE40/ssd-one-digit.vhd" 
 add_file -vhdl -lib work "../../../vhdl/iCE40/ssd-two-digits.vhd" 
 add_file -vhdl -lib work "../mcpu_toplevel.vhd" 
 add_file -vhdl -lib work "../../../vhdl/gpio.vhd" 
 add_file -vhdl -lib work "../../../vhdl/ssram.vhd" 
+add_file -vhdl -lib work "../../../vhdl/mcpud.vhd" 
 #implementation: "mcpu_Implmnt"
 impl -add mcpu_Implmnt -type fpga
 

@@ -21,16 +21,15 @@ signal delay          : unsigned (31 downto 0) := (others => '0');
 
 
 -- MCPU signals
-signal r_data       : std_logic_vector (7 downto 0) := (others => '0');
-signal mcpu_datain  : std_logic_vector (7 downto 0) := (others => '0');
-signal mcpu_dataout : std_logic_vector (7 downto 0) := (others => '0');
+signal r_datain  : std_logic_vector (7 downto 0) := (others => '0');
+signal r_dataout : std_logic_vector (7 downto 0) := (others => '0');
 signal r_address    : std_logic_vector (5 downto 0) := (others => '0');
 signal r_oe         : std_logic := '0';
 signal r_we         : std_logic := '0';
 signal div_clk      : std_logic := '0';
 signal r_clk        : std_logic := '0';
 signal mcpu_clk     : std_logic := '0';
-signal r_rst        : std_logic := '0';
+signal r_reset      : std_logic := '0';
 signal r_gpio       : std_logic_vector (7 downto 0) := (others => '0');
 
 begin
@@ -50,53 +49,48 @@ begin
 
     
 	-- Instantiate MCPU peripheral
-	MCPU: entity work.CPU8BIT2
+	MCPU: entity work.mcpu
 	port map(
-	data	=> r_data,
-	adress	=> r_address,
-	oe	    => r_oe,
-	we      => r_we,	
-	rst     => r_rst,	
-	clk	    => mcpu_clk
+	clock    => r_clk,
+    reset    => r_reset,
+    dataout  => r_dataout,
+    datain   => r_datain,
+    address  => r_address,
+    we       => r_we
 	);
     
     
     -- Instantiate SRAM
-    --SRAM: entity work.mcpu_ram
 	SRAM: entity work.ssram
     port map(
 	a => r_address,
-	d => mcpu_dataout,
+	d => r_dataout,
 	clk => r_clk,
 	we => r_we,
-	spo => mcpu_datain
+	spo =>r_datain
     );
     
     GPIO: entity work.gpio
     port map(
     clk => r_clk,
-    reset => r_rst,
+    reset => r_reset,
     address => r_address,
-    data => r_data,
+    data => r_dataout,
     gpo => r_gpio,
     we => r_we
     );
 
     
-    -- Manage data mux MCPU <=> SRAM
-   	r_data <= mcpu_datain when (r_oe = '0') else "ZZZZZZZZ";
-	mcpu_dataout <= r_data;
-
 	-- Debug address, clock and WE
     debug <= r_address & r_we & r_clk;
     
     -- Reset
-    r_rst <= reset;
+    r_reset <= reset;
     
     -- Assign clocks
     r_clk <= div_clk;
     
-    mcpu_clk <= r_clk when (delay >= x"07") else '0';
+    mcpu_clk <= r_clk; -- when (delay >= x"07") else '0';
     
     -- GPIO
     mgpio <= r_gpio;

@@ -34,12 +34,9 @@ signal div_clk     : std_logic := '0';
 
 -- Address
 signal s_address : std_logic_vector (5 downto 0) := (others => '0');
-signal data : std_logic_vector (7 downto 0) := (others => '0');
 signal mcpu_datain  : std_logic_vector (7 downto 0) := (others => '0');
 signal mcpu_dataout : std_logic_vector (7 downto 0) := (others => '0');
-signal s_oe : std_logic := '0';
 signal s_we : std_logic := '0';
-signal sram_we : std_logic := '0';
 
 signal ssdval : std_logic_vector (7 downto 0) := (others => '0');
 signal s_gpio : std_logic_vector (7 downto 0) := (others => '0');
@@ -59,15 +56,15 @@ end if;
 end process clk_divider;
 
 
--- Instantiate MCPU
-  mcpu: entity work.CPU8BIT2
-  port map(
-	data => data,
-	adress => s_address,
-	oe => s_oe,
-	we => s_we,
-	rst => reset,
-	clk => div_clk
+  -- Instantiate MCPU  
+  MCPU: entity work.mcpu
+    port map(
+    clock    => div_clk,
+    reset    => reset,
+    dataout  => mcpu_dataout,
+    datain   => mcpu_datain,
+    address  => s_address,
+    we       => s_we
   );
 
 
@@ -114,17 +111,12 @@ end process clk_divider;
    );
 
 
--- Route data
-data <= mcpu_datain when s_oe = '0' else "ZZZZZZZZ";
-mcpu_dataout <= data;
-
 -- Debug addres on display
 ssdval <= "00" & std_logic_vector(s_address);
 
 -- Debug other signals
 debug(0) <= div_clk;
-debug(1) <= s_oe;
-debug(2) <= s_we;
+debug(1) <= s_we;
 
 
 -- GPIO peripheral
