@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity mcpu_toplevel is
-generic (CLK_DIVISOR :  POSITIVE := 10000);
+generic (CLK_DIVISOR :  POSITIVE := 1000);
 port(
   clk     : in std_logic;
   reset   : in std_logic;
@@ -32,6 +32,10 @@ architecture behaviour of mcpu_toplevel is
 signal clk_div_cnt : unsigned (31 downto 0) := (others => '0');
 signal div_clk     : std_logic := '0';
 
+signal mcpu_clk     : std_logic := '0';
+
+signal delay          : unsigned (31 downto 0) := (others => '0');
+
 -- Address
 signal s_address : std_logic_vector (5 downto 0) := (others => '0');
 signal mcpu_datain  : std_logic_vector (7 downto 0) := (others => '0');
@@ -51,6 +55,7 @@ if(rising_edge(clk)) then
     div_clk <= not div_clk;
   else
     clk_div_cnt <= clk_div_cnt + 1;
+    delay <= delay + 1;
   end if;
 end if;
 end process clk_divider;
@@ -59,7 +64,7 @@ end process clk_divider;
   -- Instantiate MCPU  
   MCPU: entity work.mcpu
     port map(
-    clock    => div_clk,
+    clock    => mcpu_clk,
     reset    => reset,
     dataout  => mcpu_dataout,
     datain   => mcpu_datain,
@@ -110,6 +115,8 @@ end process clk_divider;
    we => s_we
    );
 
+-- MCPU clock
+mcpu_clk <= div_clk when (delay >= x"07") else '0';
 
 -- Debug addres on display
 ssdval <= "00" & std_logic_vector(s_address);
