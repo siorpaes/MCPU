@@ -56,11 +56,11 @@ begin
 				mcpustate <= EX;
 			when EX =>
 				if (opcode = "00") then -- NOR
-					accumulator(7 downto 0) <= accumulator(7 downto 0) nor datain;
+					accumulator(7 downto 0) <= accumulator(7 downto 0) nor operand;
 					pc <= pc + 1;
 					mcpustate <= F0;
 				elsif (opcode = "01") then -- ADD
-					accumulator <= accumulator + datain;
+					accumulator <= accumulator + operand;
 					pc <= pc + 1;
 					mcpustate <= F0;
 				elsif (opcode = "10") then --STA
