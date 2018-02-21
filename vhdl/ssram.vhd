@@ -11,7 +11,8 @@ port(
 	a   : in  std_logic_vector(5 downto 0); -- Address
 	d   : in  std_logic_vector(7 downto 0); -- Data In
 	clk : in  std_logic;                    -- Clock
-	we  : in  std_logic;                    -- Write Enable, active high
+	we  : in  std_logic;                    -- Write Enable, active low
+	oe  : in  std_logic;                    -- Output Enable, active low
 	spo : out std_logic_vector(7 downto 0)  -- Data Out
 );
 end ssram;
@@ -40,10 +41,12 @@ begin
 
 process(clk, we, a, d)
 begin
-	if falling_edge(clk) then
+	if rising_edge(clk) then
 		if(we = '0') then
 			memory(to_integer(unsigned(a))) <= d;
-		else
+		end if;
+		
+		if(oe = '0') then
 			spo <= memory(to_integer(unsigned(a)));
 		end if;
 	end if;

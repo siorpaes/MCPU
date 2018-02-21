@@ -48,7 +48,7 @@ begin
     end process clock;
 
     
-	-- Instantiate MCPU peripheral
+	-- Instantiate MCPU
 	MCPU: entity work.mcpu
 	port map(
 	clock    => mcpu_clk,
@@ -56,7 +56,8 @@ begin
     dataout  => r_dataout,
     datain   => r_datain,
     address  => r_address,
-    we       => r_we
+    we       => r_we,
+    oe		 => r_oe
 	);
     
     
@@ -67,6 +68,7 @@ begin
 	d => r_dataout,
 	clk => r_clk,
 	we => r_we,
+	oe => r_oe,
 	spo =>r_datain
     );
     

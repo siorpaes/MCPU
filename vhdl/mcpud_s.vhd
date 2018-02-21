@@ -13,21 +13,22 @@ entity mcpu is
 		dataout  :	out	std_logic_vector(7 downto 0);
 		datain   :  in  std_logic_vector(7 downto 0);
 		address  :	out	std_logic_vector(5 downto 0);
-		we       :  out	std_logic
+		we       :  out	std_logic;
+		oe       :  out	std_logic
 		);
 
 		-- Preserve from synthesis optimization
-		attribute dont_touch : string;
-		attribute dont_touch of mcpu : entity is "true";
+--		attribute dont_touch : string;
+	--	attribute dont_touch of mcpu : entity is "true";
 end;
 
 architecture rtl of mcpu is
 	-- Preserve from synthesis optimization
-	attribute dont_touch of rtl : architecture is "true";
+	-- attribute dont_touch of rtl : architecture is "true";
 	
 	-- As above for Lattice
-	attribute syn_hier : string;
-	attribute syn_hier of rtl: architecture is "hard";
+	-- attribute syn_hier : string;
+	-- attribute syn_hier of rtl: architecture is "hard";
 
 	signal addr       :	std_logic_vector(5 downto 0) := (others => '0');
 	signal accumulator:	std_logic_vector(8 downto 0) := (others => '0');
@@ -46,11 +47,13 @@ begin
 		accumulator <= (others => '0');
 		pc   <= (others => '0');
 		mcpustate <= F0;
-		we <= '1'; -- Negated
+		we <= '1';
+		oe <= '0';
 	elsif rising_edge(clock) then
 		case mcpustate is
 			when F0 =>
 				we <= '1';
+				oe <= '0';
 				addr <= pc;
 				mcpustate <= F1;
 			when F1 =>
