@@ -7,7 +7,7 @@ add_file -vhdl -lib work "../../../vhdl/iCE40/ssd-two-digits.vhd"
 add_file -vhdl -lib work "../mcpu_toplevel.vhd" 
 add_file -vhdl -lib work "../../../vhdl/gpio.vhd" 
 add_file -vhdl -lib work "../../../vhdl/ssram.vhd" 
-add_file -vhdl -lib work "../../../vhdl/mcpud.vhd" 
+add_file -vhdl -lib work "../../../vhdl/mcpud_s.vhd" 
 #implementation: "mcpu_Implmnt"
 impl -add mcpu_Implmnt -type fpga
 

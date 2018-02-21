@@ -15,9 +15,20 @@ entity mcpu is
 		address  :	out	std_logic_vector(5 downto 0);
 		we       :  out	std_logic
 		);
+
+		-- Preserve from synthesis optimization
+		attribute dont_touch : string;
+		attribute dont_touch of mcpu : entity is "true";
 end;
 
 architecture rtl of mcpu is
+	-- Preserve from synthesis optimization
+	attribute dont_touch of rtl : architecture is "true";
+	
+	-- As above for Lattice
+	attribute syn_hier : string;
+	attribute syn_hier of rtl: architecture is "hard";
+
 	signal addr       :	std_logic_vector(5 downto 0) := (others => '0');
 	signal accumulator:	std_logic_vector(8 downto 0) := (others => '0');
 	signal pc:         	std_logic_vector(5 downto 0) := (others => '0');

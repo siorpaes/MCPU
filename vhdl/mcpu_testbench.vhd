@@ -19,18 +19,28 @@ begin
 	
 
   process                                              
-	begin                                                
-	      clk <= '0';                                    
-	      reset <= '1';                                  
-	      WAIT FOR 10 ns;                                
-	      clk <= '0';                                    
-	      reset <= '0';                                  
-	      WAIT FOR 10 ns;                                
-	      clk <= '1';                                    
-	      WAIT FOR 5 ns;                                
-	      reset <= '1';                                  
-	      WAIT FOR 5 ns;                                
-	                                                     
+	begin 
+		  -- Send out 10 clock pulses before reset
+		  for i in 0 to 10 loop
+		  	clk <= '0';                                  
+		  	WAIT FOR 10 ns;                              
+		  	clk <= '1';                                  
+		  	WAIT FOR 10 ns; 
+		  end loop;
+	      
+	      -- Give reset            
+	      clk <= '0';                                  
+	      reset <= '1';                                
+	      WAIT FOR 10 ns;
+	      clk <= '0';                                  
+	      reset <= '0';                              
+	      WAIT FOR 10 ns;
+	      clk <= '1';                                 
+	      WAIT FOR 5 ns;         
+	      reset <= '1';
+	      WAIT FOR 5 ns;
+	      
+	      -- Clock                                              
 	      loop                                           
 	        clk <= '0';                                  
 	        WAIT FOR 10 ns;                              
