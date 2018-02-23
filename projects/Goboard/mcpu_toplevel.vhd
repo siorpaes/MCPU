@@ -33,6 +33,7 @@ signal clk_div_cnt : unsigned (31 downto 0) := (others => '0');
 signal div_clk     : std_logic := '0';
 
 signal mcpu_clk     : std_logic := '0';
+signal sram_clk     : std_logic := '0';
 
 signal delay          : unsigned (31 downto 0) := (others => '0');
 
@@ -80,7 +81,7 @@ end process clk_divider;
   port map(
 	a   => s_address,
 	d   => mcpu_dataout,
-	clk => div_clk,
+	clk => sram_clk,
 	we  => s_we,
 	oe  => s_oe,
 	spo => mcpu_datain
@@ -120,6 +121,9 @@ end process clk_divider;
 
 -- MCPU clock
 mcpu_clk <= div_clk when (delay >= x"07") else '0';
+
+-- SRAM clock
+sram_clk <= not div_clk;
 
 -- Debug addres on display
 ssdval <= "00" & std_logic_vector(s_address);

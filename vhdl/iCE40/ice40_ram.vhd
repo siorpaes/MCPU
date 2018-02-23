@@ -10,6 +10,7 @@ port(
 	d   : in  std_logic_vector(7 downto 0);
 	clk : in  std_logic;
 	we  : in  std_logic;
+	oe  : in  std_logic;
 	spo : out std_logic_vector(7 downto 0)
 );
 end ice40_ram;
@@ -64,8 +65,8 @@ begin
 ram512x8_inst : SB_RAM512x8
 
 generic map (
-	INIT_0 => X"000000000000000000000000000000000000000000000000000000c0c1bc7f3e",
-	INIT_1 => X"01ff000000000000000000000000000000000000000000000000000000000000",
+	INIT_0 => X"0000000000000000000000000000000000000000c0c0bc39ba7f7a3ec1bb7f3e",
+	INIT_1 => X"01ff00000000fe00000000000000000000000000000000000000000000000000",
 	INIT_2 => X"0000000000000000000000000000000000000000000000000000000000000000",
 	INIT_3 => X"0000000000000000000000000000000000000000000000000000000000000000",
 	INIT_4 => X"0000000000000000000000000000000000000000000000000000000000000000",
@@ -98,13 +99,13 @@ port map (
 -- SRAM Mapping
 spo  <= RDATA_c;
 RADDR_c  <= "000" & a;
-RCLK_c   <= not clk;
+RCLK_c   <= clk;
 RCLKE_c  <= '1';
-RE_c     <= not we;
+RE_c     <= not oe;
 WADDR_c  <= "000" & a;
 WCLK_c   <= clk;
 WCLKE_c    <= '1';
 WDATA_c  <= d;
-WE_c     <= we;
+WE_c     <= not we;
 
 end Behavioral;
