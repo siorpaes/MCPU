@@ -49,49 +49,47 @@ Port (
 );
 end component;
 
-signal RDATA_c : std_logic_vector(7 downto 0);
-signal RADDR_c : std_logic_vector(8 downto 0);
-signal RCLK_c  : std_logic;
-signal RCLKE_c : std_logic;
-signal RE_c    : std_logic;
-signal WADDR_c : std_logic_vector(8 downto 0);
-signal WCLK_c  : std_logic;
-signal WCLKE_c : std_logic;
-signal WDATA_c : std_logic_vector(7 downto 0);
-signal WE_c    : std_logic;
+signal RDATA_c : std_logic_vector(7 downto 0) := (others => '0');
+signal RADDR_c : std_logic_vector(8 downto 0) := (others => '0');
+signal RCLK_c  : std_logic := '1';
+signal RE_c    : std_logic := '1';
+signal WADDR_c : std_logic_vector(8 downto 0) := (others => '0');
+signal WCLK_c  : std_logic := '1';
+signal WDATA_c : std_logic_vector(7 downto 0) := (others => '0');
+signal WE_c    : std_logic := '0';
 
 begin
 
 ram512x8_inst : SB_RAM512x8
 
 generic map (
-	INIT_0 => X"0000000000000000000000000000000000000000c0c0bc39ba7f7a3ec1bb7f3e",
-	INIT_1 => X"01ff00000000fe00000000000000000000000000000000000000000000000000",
-	INIT_2 => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_3 => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_4 => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_5 => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_6 => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_7 => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_8 => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_9 => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_A => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_B => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_C => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_D => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_E => X"0000000000000000000000000000000000000000000000000000000000000000",
-	INIT_F => X"0000000000000000000000000000000000000000000000000000000000000000"
+	INIT_0 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbc0c0bc39ba7f7a3ec1bb7f3f",
+	INIT_1 => X"01ff00000000febbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_2 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_3 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_4 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_5 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_6 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_7 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_8 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_9 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_A => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_B => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_C => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_D => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_E => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_F => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 )
 
 port map (
 	RDATA => RDATA_c,
 	RADDR => RADDR_c,
 	RCLK => RCLK_c,
-	RCLKE => RCLKE_c,
+	RCLKE => '1',
 	RE => RE_c,
 	WADDR => WADDR_c,
 	WCLK=> WCLK_c,
-	WCLKE => WCLKE_c,
+	WCLKE => '1',
 	WDATA => WDATA_c,
 	WE => WE_c
 );
@@ -100,11 +98,9 @@ port map (
 spo  <= RDATA_c;
 RADDR_c  <= "000" & a;
 RCLK_c   <= clk;
-RCLKE_c  <= '1';
 RE_c     <= not oe;
 WADDR_c  <= "000" & a;
 WCLK_c   <= clk;
-WCLKE_c    <= '1';
 WDATA_c  <= d;
 WE_c     <= not we;
 

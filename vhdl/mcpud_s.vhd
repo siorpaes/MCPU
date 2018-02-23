@@ -10,11 +10,11 @@ entity mcpu is
 	port (
 		clock    :  in std_logic;
 		reset    :  in std_logic;
-		dataout  :	out	std_logic_vector(7 downto 0);
-		datain   :  in  std_logic_vector(7 downto 0);
-		address  :	out	std_logic_vector(5 downto 0);
-		we       :  out	std_logic;
-		oe       :  out	std_logic
+		dataout  :  out std_logic_vector(7 downto 0);
+		datain   :  in std_logic_vector(7 downto 0);
+		address  :  out std_logic_vector(5 downto 0);
+		we       :  out std_logic;
+		oe       :  out std_logic
 		);
 
 		-- Preserve from synthesis optimization

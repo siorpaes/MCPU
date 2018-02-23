@@ -120,7 +120,7 @@ end process clk_divider;
    );
 
 -- MCPU clock
-mcpu_clk <= div_clk when (delay >= x"07") else '0';
+mcpu_clk <= div_clk when (delay >= x"09") else '0';
 
 -- SRAM clock
 sram_clk <= not div_clk;
