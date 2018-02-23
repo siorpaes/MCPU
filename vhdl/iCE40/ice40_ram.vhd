@@ -4,7 +4,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity ice40_ram is
+entity ssram is
 port(
 	a   : in  std_logic_vector(5 downto 0);
 	d   : in  std_logic_vector(7 downto 0);
@@ -13,9 +13,9 @@ port(
 	oe  : in  std_logic;
 	spo : out std_logic_vector(7 downto 0)
 );
-end ice40_ram;
+end ssram;
 
-architecture Behavioral of ice40_ram is
+architecture Behavioral of ssram is
 
 component SB_RAM512x8
 generic ( 	INIT_0 : std_logic_vector(255 downto 0);
