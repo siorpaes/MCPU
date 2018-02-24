@@ -97,10 +97,10 @@ port map (
 -- SRAM Mapping
 spo  <= RDATA_c;
 RADDR_c  <= "000" & a;
-RCLK_c   <= clk;
+RCLK_c   <= not clk;
 RE_c     <= not oe;
 WADDR_c  <= "000" & a;
-WCLK_c   <= clk;
+WCLK_c   <= not clk;
 WDATA_c  <= d;
 WE_c     <= not we;
 
