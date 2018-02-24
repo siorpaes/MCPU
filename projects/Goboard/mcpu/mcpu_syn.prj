@@ -8,6 +8,7 @@ add_file -vhdl -lib work "../mcpu_toplevel.vhd"
 add_file -vhdl -lib work "../../../vhdl/gpio.vhd" 
 add_file -vhdl -lib work "../../../vhdl/mcpud_s.vhd" 
 add_file -vhdl -lib work "../../../vhdl/ssram.vhd" 
+add_file -constraint -lib work "../Go_Board_Constraints.sdc"
 #implementation: "mcpu_Implmnt"
 impl -add mcpu_Implmnt -type fpga
 

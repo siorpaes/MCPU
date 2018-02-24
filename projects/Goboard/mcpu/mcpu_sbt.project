@@ -4,8 +4,8 @@ Version=Lattice Semiconductor Corporation iCEcube - Release: 2017.01.27914 - Bui
 ProjectName=mcpu
 Vendor=SiliconBlue
 Synthesis=synplify
-ProjectVFiles=../../../vhdl/iCE40/ssd-one-digit.vhd=work,../../../vhdl/iCE40/ssd-two-digits.vhd=work,../mcpu_toplevel.vhd=work,../../../vhdl/gpio.vhd=work,../../../vhdl/mcpud_s.vhd=work,../../../vhdl/ssram.vhd
-ProjectCFiles=
+ProjectVFiles=../../../vhdl/iCE40/ssd-one-digit.vhd=work,../../../vhdl/iCE40/ssd-two-digits.vhd=work,../mcpu_toplevel.vhd=work,../../../vhdl/gpio.vhd=work,../../../vhdl/mcpud_s.vhd=work,../../../vhdl/ssram.vhd=work
+ProjectCFiles=../Go_Board_Constraints.sdc
 CurImplementation=mcpu_Implmnt
 Implementations=mcpu_Implmnt
 StartFromSynthesis=yes
