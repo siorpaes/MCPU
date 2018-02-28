@@ -63,8 +63,8 @@ begin
 ram512x8_inst : SB_RAM512x8
 
 generic map (
-	INIT_0 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbc0c0bc39ba7f7a3ec1bb7f3f",
-	INIT_1 => X"01ff00000000febbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	INIT_0 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbc00e0d880b0a",
+	INIT_1 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 	INIT_2 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 	INIT_3 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 	INIT_4 => X"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
@@ -95,12 +95,12 @@ port map (
 );
 
 -- SRAM Mapping
-spo  <= RDATA_c;
+spo      <= RDATA_c;
 RADDR_c  <= "000" & a;
-RCLK_c   <= not clk;
+RCLK_c   <= clk;
 RE_c     <= not oe;
 WADDR_c  <= "000" & a;
-WCLK_c   <= not clk;
+WCLK_c   <= clk;
 WDATA_c  <= d;
 WE_c     <= not we;
 
