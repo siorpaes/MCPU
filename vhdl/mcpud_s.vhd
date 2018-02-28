@@ -17,8 +17,8 @@ entity mcpu is
 		oe       :  out std_logic
 		);
 
-		-- Preserve from synthesis optimization
---		attribute dont_touch : string;
+	--  Preserve from synthesis optimization
+	--  attribute dont_touch : string;
 	--	attribute dont_touch of mcpu : entity is "true";
 end;
 
@@ -81,6 +81,7 @@ begin
 					addr <= operand(5 downto 0);
 					dataout <= accumulator(7 downto 0);
 					we <= '0';
+					oe <= '1';
 					pc <= pc + 1;
 					mcpustate <= F0;
 				else -- JCC
