@@ -95,6 +95,8 @@ begin
 					end if;
 					mcpustate <= F0;
 				end if;
+			 when others =>
+				mcpustate <= F0;
 		end case;
 	end if;
 end process;
