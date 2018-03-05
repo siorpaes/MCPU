@@ -4,6 +4,8 @@ use ieee.numeric_std.all;
 
 entity mcpu_toplevel is
 generic (CLK_DIVISOR :  POSITIVE := 1000);
+--generic (CLK_DIVISOR :  POSITIVE := 4000000);
+
 port(
   clk     : in std_logic;
   reset   : in std_logic;
