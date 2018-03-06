@@ -12,7 +12,6 @@ port(
 	d   : in  std_logic_vector(7 downto 0); -- Data In
 	clk : in  std_logic;                    -- Clock
 	we  : in  std_logic;                    -- Write Enable, active low
-	oe  : in  std_logic;                    -- Output Enable, active low
 	spo : out std_logic_vector(7 downto 0)  -- Data Out
 );
 end ssram;
@@ -31,12 +30,12 @@ signal memory : memory_array := (
 );
 
 -- Infer Block RAM for iCE40 Lattice FPGA
-attribute syn_ramstyle : string;
-attribute syn_ramstyle of memory : signal is "block_ram";
+--attribute syn_ramstyle : string;
+--attribute syn_ramstyle of memory : signal is "block_ram";
 
 --Infer Block RAM for Xilinx FPGA                   
-attribute ram_style : string;
-attribute ram_style of memory : signal is "block";
+--attribute ram_style : string;
+--attribute ram_style of memory : signal is "block";
    
 begin
 

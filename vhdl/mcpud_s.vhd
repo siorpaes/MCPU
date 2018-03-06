@@ -14,8 +14,7 @@ entity mcpu is
 		dataout  :  out std_logic_vector(7 downto 0);
 		datain   :  in std_logic_vector(7 downto 0);
 		address  :  out std_logic_vector(5 downto 0);
-		we       :  out std_logic;
-		oe       :  out std_logic
+		we       :  out std_logic
 		);
 
 	--  Preserve from synthesis optimization
@@ -50,7 +49,6 @@ begin
 		pc   <= (others => '0');
 		mcpustate <= F0;
 		we <= '1';
-		oe <= '0';
 	elsif rising_edge(clock) then
 		delay <= delay + 1;
 
@@ -58,7 +56,6 @@ begin
 			case mcpustate is
 				when F0 =>
 					we <= '1';
-					oe <= '0';
 					addr <= pc;
 					mcpustate <= F1;
 				when F1 =>
@@ -86,7 +83,6 @@ begin
 						addr <= operand(5 downto 0);
 						dataout <= accumulator(7 downto 0);
 						we <= '0';
-						oe <= '1';
 						pc <= pc + 1;
 						mcpustate <= F0;
 					else -- JCC
