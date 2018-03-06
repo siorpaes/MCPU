@@ -44,7 +44,6 @@ signal s_address : std_logic_vector (5 downto 0) := (others => '0');
 signal mcpu_datain  : std_logic_vector (7 downto 0) := (others => '0');
 signal mcpu_dataout : std_logic_vector (7 downto 0) := (others => '0');
 signal s_we : std_logic := '1';
-signal s_oe : std_logic := '0';
 
 signal ssdval : std_logic_vector (7 downto 0) := (others => '0');
 signal s_gpio : std_logic_vector (7 downto 0) := (others => '0');
@@ -73,8 +72,7 @@ end process clk_divider;
     dataout  => mcpu_dataout,
     datain   => mcpu_datain,
     address  => s_address,
-    we       => s_we,
-    oe	 => s_oe
+    we       => s_we
   );
 
 
@@ -85,7 +83,6 @@ end process clk_divider;
 	d   => mcpu_dataout,
 	clk => sram_clk,
 	we  => s_we,
-	oe  => s_oe,
 	spo => mcpu_datain
   );
 
