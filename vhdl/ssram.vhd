@@ -20,22 +20,22 @@ architecture Behavioral of ssram is
 
 type memory_array is array(0 to 63) of std_logic_vector(7 downto 0);
 signal memory : memory_array := (
---	x"3e",x"7f",x"bb",x"c1",x"3e",x"7a",x"7f",x"ba",x"39",x"bc",x"c0",x"c0",x"00",x"00",x"00",x"00", -- blinky
+	x"3e",x"7f",x"bb",x"c1",x"3e",x"7a",x"7f",x"ba",x"39",x"bc",x"c0",x"c0",x"00",x"00",x"00",x"00", -- blinky
 --	x"3e",x"7f",x"bc",x"c1",x"c0",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00", -- gpio
 --	x"3e",x"46",x"7e",x"86",x"c0",x"c5",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00", -- rwloop
-	x"0a",x"0b",x"88",x"0d",x"0e",x"c0",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00", -- STA test
+--	x"0a",x"0b",x"88",x"0d",x"0e",x"c0",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00", -- STA test
 	x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",
 	x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",
 	x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"00",x"fe",x"00",x"00",x"00",x"00",x"ff",x"01"
 );
 
 -- Infer Block RAM for iCE40 Lattice FPGA
---attribute syn_ramstyle : string;
---attribute syn_ramstyle of memory : signal is "block_ram";
+attribute syn_ramstyle : string;
+attribute syn_ramstyle of memory : signal is "block_ram";
 
 --Infer Block RAM for Xilinx FPGA                   
---attribute ram_style : string;
---attribute ram_style of memory : signal is "block";
+attribute ram_style : string;
+attribute ram_style of memory : signal is "block";
    
 begin
 
@@ -43,6 +43,7 @@ process(clk, we, a, d)
 begin
 	if (clk'event and clk='1') then
 		spo <= memory(to_integer(unsigned(a)));
+
 		if(we = '0') then
 			memory(to_integer(unsigned(a))) <= d;			
 		end if;

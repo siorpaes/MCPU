@@ -52,7 +52,7 @@ begin
 	elsif rising_edge(clock) then
 		delay <= delay + 1;
 
-		if(delay > x"8") then
+		if(delay > x"4") then
 			case mcpustate is
 				when F0 =>
 					we <= '1';
