@@ -24,7 +24,6 @@ signal delay          : unsigned (31 downto 0) := (others => '0');
 signal r_datain  : std_logic_vector (7 downto 0) := (others => '0');
 signal r_dataout : std_logic_vector (7 downto 0) := (others => '0');
 signal r_address    : std_logic_vector (5 downto 0) := (others => '0');
-signal r_oe         : std_logic := '0';
 signal r_we         : std_logic := '0';
 signal div_clk      : std_logic := '0';
 signal r_clk        : std_logic := '0';
@@ -56,8 +55,7 @@ begin
     dataout  => r_dataout,
     datain   => r_datain,
     address  => r_address,
-    we       => r_we,
-    oe		 => r_oe
+    we       => r_we
 	);
     
     
@@ -68,7 +66,6 @@ begin
 	d => r_dataout,
 	clk => r_clk,
 	we => r_we,
-	oe => r_oe,
 	spo =>r_datain
     );
     
