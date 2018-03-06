@@ -13,7 +13,10 @@
 # ##############################################################################
 
 ### Main FPGA Clock
-set_io clk 15
+#set_io clk 15
+
+set_io clk 62
+
 
 ### LED Pins:
 set_io gpio[0] 56
@@ -64,7 +67,7 @@ set_io gpio[7] 37
 set_io debug[0] 65
 set_io debug[1] 64
 set_io debug[2] 63
-#set_io gpio[7] 62
+#set_io reset 62
 #set_io debug[0] 78
 #set_io debug[1] 79
 #set_io debug[2] 80

@@ -5,6 +5,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all;
 
 entity mcpu is
 	port (
@@ -30,6 +31,7 @@ architecture rtl of mcpu is
 	-- attribute syn_hier : string;
 	-- attribute syn_hier of rtl: architecture is "hard";
 
+	signal delay          : unsigned (31 downto 0) := (others => '0');
 	signal addr       :	std_logic_vector(5 downto 0) := (others => '0');
 	signal accumulator:	std_logic_vector(8 downto 0) := (others => '0');
 	signal pc:         	std_logic_vector(5 downto 0) := (others => '0');
@@ -50,6 +52,9 @@ begin
 		we <= '1';
 		oe <= '0';
 	elsif rising_edge(clock) then
+		delay <= delay + 1;
+
+		if(delay > x"100") then
 		case mcpustate is
 			when F0 =>
 				we <= '1';
@@ -98,6 +103,7 @@ begin
 			 when others =>
 				mcpustate <= F0;
 		end case;
+		end if;
 	end if;
 end process;
 

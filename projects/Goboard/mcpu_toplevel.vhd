@@ -30,15 +30,6 @@ end entity mcpu_toplevel;
 
 architecture behaviour of mcpu_toplevel is
 
--- Clock divider
-signal clk_div_cnt : unsigned (31 downto 0) := (others => '0');
-signal div_clk     : std_logic := '0';
-
-signal mcpu_clk     : std_logic := '0';
-signal sram_clk     : std_logic := '0';
-
-signal delay          : unsigned (31 downto 0) := (others => '0');
-
 -- Address
 signal s_address : std_logic_vector (5 downto 0) := (others => '0');
 signal mcpu_datain  : std_logic_vector (7 downto 0) := (others => '0');
@@ -50,25 +41,10 @@ signal ssdval : std_logic_vector (7 downto 0) := (others => '0');
 signal s_gpio : std_logic_vector (7 downto 0) := (others => '0');
 begin
 
--- Clock divider
-clk_divider: process(clk)
-begin
-if(rising_edge(clk)) then
-  if clk_div_cnt = (CLK_DIVISOR-1) then
-    clk_div_cnt <= (others => '0');
-    div_clk <= not div_clk;
-  else
-    clk_div_cnt <= clk_div_cnt + 1;
-    delay <= delay + 1;
-  end if;
-end if;
-end process clk_divider;
-
-
   -- Instantiate MCPU  
   MCPU: entity work.mcpu
     port map(
-    clock    => mcpu_clk,
+    clock    => clk,
     reset    => reset,
     dataout  => mcpu_dataout,
     datain   => mcpu_datain,
@@ -83,7 +59,7 @@ end process clk_divider;
   port map(
 	a   => s_address,
 	d   => mcpu_dataout,
-	clk => sram_clk,
+	clk => not clk,
 	we  => s_we,
 	oe  => s_oe,
 	spo => mcpu_datain
@@ -92,7 +68,7 @@ end process clk_divider;
 -- Instantiate double SSD
   DIGITS: entity work.ssd_two_digits
   port map(
-    i_Clk        => div_clk,
+    i_Clk        => clk,
     i_Binary_Num => ssdval,
     o_Segment_1A => o_Segment1_A,
     o_Segment_1B => o_Segment1_B,
@@ -113,7 +89,7 @@ end process clk_divider;
 -- Instantiate GPIO peripheral
    M_GPIO: entity work.gpio
    port map(
-   clk => div_clk,
+   clk => clk,
    reset => reset,
    address => s_address,
    data => mcpu_dataout,
@@ -121,17 +97,11 @@ end process clk_divider;
    we => s_we
    );
 
--- MCPU clock
-mcpu_clk <= div_clk when (delay >= x"09") else '0';
-
--- SRAM clock
-sram_clk <= not div_clk;
-
 -- Debug addres on display
 ssdval <= "00" & std_logic_vector(s_address);
 
 -- Debug other signals
-debug(0) <= div_clk;
+debug(0) <= gpio(0);
 debug(1) <= s_we;
 
 
