@@ -28,8 +28,8 @@ architecture rtl of mcpu is
 	-- attribute dont_touch of rtl : architecture is "true";
 	
 	-- As above for Lattice
-	-- attribute syn_hier : string;
-	-- attribute syn_hier of rtl: architecture is "hard";
+	attribute syn_hier : string;
+	attribute syn_hier of rtl: architecture is "hard";
 
 	signal delay          : unsigned (31 downto 0) := (others => '0');
 	signal addr       :	std_logic_vector(5 downto 0) := (others => '0');
@@ -55,54 +55,54 @@ begin
 		delay <= delay + 1;
 
 		if(delay > x"100") then
-		case mcpustate is
-			when F0 =>
-				we <= '1';
-				oe <= '0';
-				addr <= pc;
-				mcpustate <= F1;
-			when F1 =>
-				opcode <= datain(7 downto 6);   -- Get opcode
-				operand <= "00" & datain(5 downto 0);
-				if(datain (7) = '0') then       -- If dealing with NOR/ADD
-					addr <= datain(5 downto 0); -- Fetch data from memory
-					mcpustate <= F2;
-				else
-					mcpustate <= EX;
-				end if;
-			when F2 =>
-				operand <= datain;
-				mcpustate <= EX;
-			when EX =>
-				if (opcode = "00") then -- NOR
-					accumulator(7 downto 0) <= accumulator(7 downto 0) nor operand;
-					pc <= pc + 1;
-					mcpustate <= F0;
-				elsif (opcode = "01") then -- ADD
-					accumulator <= accumulator + operand;
-					pc <= pc + 1;
-					mcpustate <= F0;
-				elsif (opcode = "10") then --STA
-					addr <= operand(5 downto 0);
-					dataout <= accumulator(7 downto 0);
-					we <= '0';
-					oe <= '1';
-					pc <= pc + 1;
-					mcpustate <= F0;
-				else -- JCC
-					-- Branch taken
-					if (accumulator(8) = '0') then
-						pc <= operand(5 downto 0);
+			case mcpustate is
+				when F0 =>
+					we <= '1';
+					oe <= '0';
+					addr <= pc;
+					mcpustate <= F1;
+				when F1 =>
+					opcode <= datain(7 downto 6);   -- Get opcode
+					operand <= "00" & datain(5 downto 0);
+					if(datain (7) = '0') then       -- If dealing with NOR/ADD
+						addr <= datain(5 downto 0); -- Fetch data from memory
+						mcpustate <= F2;
 					else
-						-- Branch not taken
-						accumulator(8) <= '0';
-						pc <= pc + 1;
+						mcpustate <= EX;
 					end if;
+				when F2 =>
+					operand <= datain;
+					mcpustate <= EX;
+				when EX =>
+					if (opcode = "00") then -- NOR
+						accumulator(7 downto 0) <= accumulator(7 downto 0) nor operand;
+						pc <= pc + 1;
+						mcpustate <= F0;
+					elsif (opcode = "01") then -- ADD
+						accumulator <= accumulator + operand;
+						pc <= pc + 1;
+						mcpustate <= F0;
+					elsif (opcode = "10") then --STA
+						addr <= operand(5 downto 0);
+						dataout <= accumulator(7 downto 0);
+						we <= '0';
+						oe <= '1';
+						pc <= pc + 1;
+						mcpustate <= F0;
+					else -- JCC
+						-- Branch taken
+						if (accumulator(8) = '0') then
+							pc <= operand(5 downto 0);
+						else
+							-- Branch not taken
+							accumulator(8) <= '0';
+							pc <= pc + 1;
+						end if;
+						mcpustate <= F0;
+					end if;
+			 	when others =>
 					mcpustate <= F0;
-				end if;
-			 when others =>
-				mcpustate <= F0;
-		end case;
+			end case;
 		end if;
 	end if;
 end process;

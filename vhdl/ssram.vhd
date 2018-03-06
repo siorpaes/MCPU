@@ -42,13 +42,10 @@ begin
 
 process(clk, we, a, d)
 begin
-	if rising_edge(clk) then
+	if (clk'event and clk='1') then
+		spo <= memory(to_integer(unsigned(a)));
 		if(we = '0') then
-			memory(to_integer(unsigned(a))) <= d;
-		end if;
-		
-		if(oe = '0') then
-			spo <= memory(to_integer(unsigned(a)));
+			memory(to_integer(unsigned(a))) <= d;			
 		end if;
 	end if;
 end process;

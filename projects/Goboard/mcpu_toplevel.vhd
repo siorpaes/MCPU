@@ -102,8 +102,6 @@ ssdval <= "00" & std_logic_vector(s_address);
 
 -- Debug other signals
 debug(0) <= gpio(0);
-debug(1) <= s_we;
-
 
 -- GPIO peripheral
 gpio <= s_gpio;
