@@ -57,7 +57,7 @@ begin
   port map(
 	a   => s_address,
 	d   => mcpu_dataout,
-	clk => not clk,
+	clk => clk,
 	we  => s_we,
 	spo => mcpu_datain
   );
