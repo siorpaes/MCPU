@@ -35,7 +35,9 @@ attribute syn_ramstyle of memory : signal is "block_ram";
 
 --Infer Block RAM for Xilinx FPGA                   
 attribute ram_style : string;
-attribute ram_style of memory : signal is "block";
+--attribute ram_style of memory : signal is "block";
+attribute ram_style of memory : signal is "distributed";
+
    
 begin
 
