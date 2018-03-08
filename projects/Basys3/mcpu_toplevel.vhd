@@ -89,7 +89,7 @@ begin
     -- Assign clocks
     r_clk <= div_clk;
     
-    mcpu_clk <= r_clk when (delay >= x"07") else '0';
+    mcpu_clk <= r_clk; -- when (delay >= x"07") else '0';
     
     -- GPIO
     mgpio <= r_gpio;
