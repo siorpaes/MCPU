@@ -18,7 +18,7 @@ entity mcpu is
 
 	--  Preserve from synthesis optimization
 	--  attribute dont_touch : string;
-	--	attribute dont_touch of mcpu : entity is "true";
+	--  attribute dont_touch of mcpu : entity is "true";
 end;
 
 architecture rtl of mcpu is
@@ -42,13 +42,15 @@ architecture rtl of mcpu is
 begin
 	process(clock, reset)
 	begin
-	if (reset = '0') then
-		addr	<= (others => '0');
-		accumulator <= (others => '0');
-		pc   <= (others => '0');
-		mcpustate <= F0;
-		we <= '0';
-	elsif rising_edge(clock) then
+
+	if rising_edge(clock) then
+		if (reset = '0') then
+			addr	<= (others => '0');
+			accumulator <= (others => '0');
+			pc   <= (others => '0');
+			mcpustate <= F0;
+			we <= '0';
+		else
 		case mcpustate is
 			-- First state: put PC on address bus
 			when F0 =>
@@ -114,6 +116,7 @@ begin
 			when others =>
 				mcpustate <= F0;
 		end case;
+	end if;
 	end if;
 end process;
 

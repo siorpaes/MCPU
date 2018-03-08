@@ -38,7 +38,7 @@ signal div_clk     : std_logic := '0';
 signal s_address : std_logic_vector (5 downto 0) := (others => '0');
 signal mcpu_datain  : std_logic_vector (7 downto 0) := (others => '0');
 signal mcpu_dataout : std_logic_vector (7 downto 0) := (others => '0');
-signal s_we : std_logic := '1';
+signal s_we : std_logic := '0';
 
 signal ssdval : std_logic_vector (7 downto 0) := (others => '0');
 signal s_gpio : std_logic_vector (7 downto 0) := (others => '0');
@@ -62,7 +62,7 @@ end process clk_divider;
   MCPU: entity work.mcpu
     port map(
     clock    => div_clk,
-    reset    => reset,
+    reset    => not reset,
     dataout  => mcpu_dataout,
     datain   => mcpu_datain,
     address  => s_address,
@@ -105,13 +105,12 @@ end process clk_divider;
    M_GPIO: entity work.gpio
    port map(
    clk => div_clk,
-   reset => reset,
+   reset => not reset,
    address => s_address,
    data => mcpu_dataout,
    gpo => s_gpio,
    we => s_we
    );
-
 
 -- Debug addres on display
 ssdval <= "00" & std_logic_vector(s_address);
