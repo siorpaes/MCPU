@@ -30,6 +30,8 @@ end entity mcpu_toplevel;
 
 architecture behaviour of mcpu_toplevel is
 
+signal nrst     : std_logic := '1';
+
 -- Clock divider
 signal clk_div_cnt : unsigned (31 downto 0) := (others => '0');
 signal div_clk     : std_logic := '0';
@@ -62,7 +64,7 @@ end process clk_divider;
   MCPU: entity work.mcpu
     port map(
     clock    => div_clk,
-    reset    => not reset,
+    reset    => nrst,
     dataout  => mcpu_dataout,
     datain   => mcpu_datain,
     address  => s_address,
@@ -105,12 +107,14 @@ end process clk_divider;
    M_GPIO: entity work.gpio
    port map(
    clk => div_clk,
-   reset => not reset,
+   reset => nrst,
    address => s_address,
    data => mcpu_dataout,
    gpo => s_gpio,
    we => s_we
    );
+
+nrst <= not reset;
 
 -- Debug addres on display
 ssdval <= "00" & std_logic_vector(s_address);
