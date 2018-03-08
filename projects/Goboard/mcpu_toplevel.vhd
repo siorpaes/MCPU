@@ -34,11 +34,6 @@ architecture behaviour of mcpu_toplevel is
 signal clk_div_cnt : unsigned (31 downto 0) := (others => '0');
 signal div_clk     : std_logic := '0';
 
-signal mcpu_clk     : std_logic := '0';
-signal sram_clk     : std_logic := '0';
-
-signal delay          : unsigned (31 downto 0) := (others => '0');
-
 -- Address
 signal s_address : std_logic_vector (5 downto 0) := (others => '0');
 signal mcpu_datain  : std_logic_vector (7 downto 0) := (others => '0');
@@ -58,16 +53,15 @@ if(rising_edge(clk)) then
     div_clk <= not div_clk;
   else
     clk_div_cnt <= clk_div_cnt + 1;
-    delay <= delay + 1;
   end if;
 end if;
 end process clk_divider;
 
 
-  -- Instantiate MCPU  
+-- Instantiate MCPU  
   MCPU: entity work.mcpu
     port map(
-    clock    => mcpu_clk,
+    clock    => div_clk,
     reset    => reset,
     dataout  => mcpu_dataout,
     datain   => mcpu_datain,
@@ -81,7 +75,7 @@ end process clk_divider;
   port map(
 	a   => s_address,
 	d   => mcpu_dataout,
-	clk => sram_clk,
+	clk => div_clk,
 	we  => s_we,
 	spo => mcpu_datain
   );
@@ -118,11 +112,6 @@ end process clk_divider;
    we => s_we
    );
 
--- MCPU clock
-mcpu_clk <= div_clk; -- when (delay >= x"09") else '0';
-
--- SRAM clock
-sram_clk <= div_clk;
 
 -- Debug addres on display
 ssdval <= "00" & std_logic_vector(s_address);

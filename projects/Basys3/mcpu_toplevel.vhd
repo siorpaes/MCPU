@@ -17,8 +17,6 @@ architecture behaviour of mcpu_toplevel is
 -- Clock divider
 signal clk_div_cnt    : unsigned (31 downto 0) := (others => '0');
 
-signal delay          : unsigned (31 downto 0) := (others => '0');
-
 
 -- MCPU signals
 signal r_datain  : std_logic_vector (7 downto 0) := (others => '0');
@@ -39,7 +37,6 @@ begin
 		if clk_div_cnt = (CLK_DIVISOR-1) then
 			clk_div_cnt <= (others => '0');
 			div_clk <= not div_clk;
-			delay <= delay + 1;
 		else
 			clk_div_cnt <= clk_div_cnt + 1;
 		end if;
@@ -50,7 +47,7 @@ begin
 	-- Instantiate MCPU
 	MCPU: entity work.mcpu
 	port map(
-	clock    => mcpu_clk,
+	clock    => div_clk,
     reset    => r_reset,
     dataout  => r_dataout,
     datain   => r_datain,
@@ -64,14 +61,15 @@ begin
     port map(
 	a => r_address,
 	d => r_dataout,
-	clk => r_clk,
+	clk => div_clk,
 	we => r_we,
 	spo =>r_datain
     );
-    
+
+
     GPIO: entity work.gpio
     port map(
-    clk => r_clk,
+    clk => div_clk,
     reset => r_reset,
     address => r_address,
     data => r_dataout,
@@ -81,16 +79,11 @@ begin
 
     
 	-- Debug address, clock and WE
-    debug <= r_address & r_we & r_clk;
+    debug <= r_address & r_we & div_clk;
     
     -- Reset
     r_reset <= reset;
-    
-    -- Assign clocks
-    r_clk <= div_clk;
-    
-    mcpu_clk <= r_clk; -- when (delay >= x"07") else '0';
-    
+        
     -- GPIO
     mgpio <= r_gpio;
     
