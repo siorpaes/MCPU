@@ -64,7 +64,7 @@ begin
     port map(
 	a => r_address,
 	d => r_dataout,
-	clk => not r_clk,
+	clk => r_clk,
 	we => r_we,
 	spo =>r_datain
     );

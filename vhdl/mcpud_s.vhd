@@ -35,7 +35,7 @@ architecture rtl of mcpu is
 	signal opcode:     	std_logic_vector(1 downto 0) := (others => '0');
 	signal operand:     std_logic_vector(7 downto 0) := (others => '0');
 
-	type state is (F0, F1, F2, EX);
+	type state is (F0, F1, F2, F2A, FA, FSTA, EX);
 	signal mcpustate : state := F0;
 
 begin
@@ -52,16 +52,20 @@ begin
 			when F0 =>
 				we <= '0';
 				addr <= pc;
+				mcpustate <= FA;
+			when FA =>
 				mcpustate <= F1;
 			when F1 =>
 				opcode <= datain(7 downto 6);   -- Get opcode
 				operand <= "00" & datain(5 downto 0);
 				if(datain (7) = '0') then       -- If dealing with NOR/ADD
 					addr <= datain(5 downto 0); -- Fetch data from memory
-					mcpustate <= F2;
+					mcpustate <= F2A;
 				else
 					mcpustate <= EX;
 				end if;
+			when F2A =>
+				mcpustate <= F2;
 			when F2 =>
 				operand <= datain;
 				mcpustate <= EX;
@@ -78,7 +82,7 @@ begin
 					addr <= operand(5 downto 0);
 					we <= '1';
 					pc <= pc + 1;
-					mcpustate <= F0;
+					mcpustate <= FSTA;
 				else -- JCC
 					-- Branch taken
 					if (accumulator(8) = '0') then
@@ -90,6 +94,8 @@ begin
 					end if;
 					mcpustate <= F0;
 				end if;
+			when FSTA =>
+				mcpustate <= F0;
 			 when others =>
 				mcpustate <= F0;
 		end case;
