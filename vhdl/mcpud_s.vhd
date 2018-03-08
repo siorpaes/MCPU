@@ -35,7 +35,8 @@ architecture rtl of mcpu is
 	signal opcode:     	std_logic_vector(1 downto 0) := (others => '0');
 	signal operand:     std_logic_vector(7 downto 0) := (others => '0');
 
-	type state is (F0, F1, F2, F2A, FA, FSTA, EX);
+	-- MCPU State Machine. Extra 'M' states are used to strobe correctly SRAM data exchange
+	type state is (F0, F0M, F1, F1M, F2, EX, FSTA);
 	signal mcpustate : state := F0;
 
 begin
@@ -49,26 +50,37 @@ begin
 		we <= '0';
 	elsif rising_edge(clock) then
 		case mcpustate is
+			-- First state: put PC on address bus
 			when F0 =>
 				we <= '0';
 				addr <= pc;
-				mcpustate <= FA;
-			when FA =>
+				mcpustate <= F0M;
+
+			-- Let SRAM latch the address
+			when F0M =>
 				mcpustate <= F1;
+
+			-- Get opcode and operand
 			when F1 =>
 				opcode <= datain(7 downto 6);   -- Get opcode
 				operand <= "00" & datain(5 downto 0);
 				if(datain (7) = '0') then       -- If dealing with NOR/ADD
 					addr <= datain(5 downto 0); -- Fetch data from memory
-					mcpustate <= F2A;
+					mcpustate <= F1M;
 				else
 					mcpustate <= EX;
 				end if;
-			when F2A =>
+
+			-- Let SRAM latch the new address
+			when F1M =>
 				mcpustate <= F2;
+
+			-- Load actual data
 			when F2 =>
 				operand <= datain;
 				mcpustate <= EX;
+
+			-- Execute operation
 			when EX =>
 				if (opcode = "00") then -- NOR
 					accumulator(7 downto 0) <= accumulator(7 downto 0) nor operand;
@@ -94,9 +106,12 @@ begin
 					end if;
 					mcpustate <= F0;
 				end if;
+
+			-- Let the store occur
 			when FSTA =>
 				mcpustate <= F0;
-			 when others =>
+
+			when others =>
 				mcpustate <= F0;
 		end case;
 	end if;
