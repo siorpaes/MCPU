@@ -33,11 +33,11 @@ begin
 		accumulator <= (others => '0');
 		pc   <= (others => '0');
 		mcpustate <= F1;
-		we <= '1'; -- Negated
+		we <= '0';
 	elsif rising_edge(clock) then
 		case mcpustate is
 			when F1 =>
-				we <= '1';
+				we <= '0';
 				addr <= pc;
 				mcpustate <= F2;
 			when F2 =>
@@ -55,7 +55,7 @@ begin
 					mcpustate <= F1;
 				elsif (opcode = "10") then --STA
 					dataout <= accumulator(7 downto 0);
-					we <= '0';
+					we <= '1';
 					pc <= pc + 1;
 					mcpustate <= F1;
 				else -- JCC
