@@ -32,6 +32,8 @@ signal memory : memory_array := (
 -- Infer Block RAM for iCE40 Lattice FPGA
 attribute syn_ramstyle : string;
 attribute syn_ramstyle of memory : signal is "block_ram";
+--attribute syn_ramstyle: string;
+--attribute syn_ramstyle of memory: signal is "no_rw_check";
 
 --Infer Block RAM for Xilinx FPGA                   
 attribute ram_style : string;
@@ -47,8 +49,12 @@ begin
 		if(we = '1') then
 			memory(to_integer(unsigned(a))) <= d;
 		end if;
+	-- Synchronous Read
 	spo <= memory(to_integer(unsigned(a)));
 	end if;
 end process;
+
+-- Asynchronous Read. Note that this won't map to a BRAM on Lattice even if documentation seems saying so (Fig. 4-2 of iCECube2 User Manual)
+--spo <= memory(to_integer(unsigned(a)));
 
 end Behavioral;
