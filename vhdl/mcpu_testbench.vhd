@@ -32,9 +32,9 @@ begin
 	process
 	begin
 		reset <= '1';
-		wait for 1ms;
+		wait for 500us;
 		reset <= '0';
-		wait for 2ms;
+		wait for 600us;
 		reset <= '1';
 		wait;
 	end process;	
