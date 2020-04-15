@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="mcpu_testbench_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="mcpu_testbench" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="1002074549543fs"></ZoomStartTime>
+      <ZoomEndTime time="1270874549544fs"></ZoomEndTime>
+      <Cursor1Time time="10916350658fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="129"></NameColumnWidth>
+      <ValueColumnWidth column_width="128"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="20" />
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/MCPU/clock" type="logic">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/MCPU/dataout" type="array">
+      <obj_property name="ElementShortName">dataout[7:0]</obj_property>
+      <obj_property name="ObjectShortName">dataout[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/MCPU/datain" type="array">
+      <obj_property name="ElementShortName">datain[7:0]</obj_property>
+      <obj_property name="ObjectShortName">datain[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/MCPU/address" type="array">
+      <obj_property name="ElementShortName">address[5:0]</obj_property>
+      <obj_property name="ObjectShortName">address[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/MCPU/we" type="logic">
+      <obj_property name="ElementShortName">we</obj_property>
+      <obj_property name="ObjectShortName">we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/MCPU/addr" type="array">
+      <obj_property name="ElementShortName">addr[5:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/MCPU/accumulator" type="array">
+      <obj_property name="ElementShortName">accumulator[8:0]</obj_property>
+      <obj_property name="ObjectShortName">accumulator[8:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/MCPU/pc" type="array">
+      <obj_property name="ElementShortName">pc[5:0]</obj_property>
+      <obj_property name="ObjectShortName">pc[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/MCPU/opcode" type="array">
+      <obj_property name="ElementShortName">opcode[1:0]</obj_property>
+      <obj_property name="ObjectShortName">opcode[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/MCPU/operand" type="array">
+      <obj_property name="ElementShortName">operand[7:0]</obj_property>
+      <obj_property name="ObjectShortName">operand[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/MCPU/mcpustate" type="other">
+      <obj_property name="ElementShortName">mcpustate</obj_property>
+      <obj_property name="ObjectShortName">mcpustate</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/SRAM/memory[56]" type="array">
+      <obj_property name="ElementShortName">[56][7:0]</obj_property>
+      <obj_property name="ObjectShortName">[56][7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/SRAM/memory[57]" type="array">
+      <obj_property name="ElementShortName">[57][7:0]</obj_property>
+      <obj_property name="ObjectShortName">[57][7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/SRAM/memory[58]" type="array">
+      <obj_property name="ElementShortName">[58][7:0]</obj_property>
+      <obj_property name="ObjectShortName">[58][7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/SRAM/memory[59]" type="array">
+      <obj_property name="ElementShortName">[59][7:0]</obj_property>
+      <obj_property name="ObjectShortName">[59][7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/SRAM/memory[60]" type="array">
+      <obj_property name="ElementShortName">[60][7:0]</obj_property>
+      <obj_property name="ObjectShortName">[60][7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/SRAM/memory[61]" type="array">
+      <obj_property name="ElementShortName">[61][7:0]</obj_property>
+      <obj_property name="ObjectShortName">[61][7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/SRAM/memory[62]" type="array">
+      <obj_property name="ElementShortName">[62][7:0]</obj_property>
+      <obj_property name="ObjectShortName">[62][7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mcpu_testbench/MCPUTOP/SRAM/memory[63]" type="array">
+      <obj_property name="ElementShortName">[63][7:0]</obj_property>
+      <obj_property name="ObjectShortName">[63][7:0]</obj_property>
+   </wvobject>
+</wave_config>
